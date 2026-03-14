@@ -11,11 +11,13 @@ import LoadingScreen from "./components/LoadingScreen";
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isVideoTransitioning, setIsVideoTransitioning] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const loopVideoRefDesktop = useRef<HTMLVideoElement>(null);
   const loopVideoRefMobile = useRef<HTMLVideoElement>(null);
 
   const handleVideoEnded = () => {
     setIsVideoTransitioning(true);
+    setShowMenu(true);
     if (loopVideoRefDesktop.current) {
       loopVideoRefDesktop.current.play();
     }
@@ -33,20 +35,64 @@ export default function App() {
       </AnimatePresence>
 
       <div 
+        className="relative min-h-screen text-white font-sans overflow-hidden bg-zinc-950"
         style={{ 
           opacity: isLoading ? 0 : 1, 
           transition: "opacity 0.5s ease-out" 
         }}
       >
-        {/* Black Background Base */}
-        <div className="fixed inset-0 bg-black z-[-20]" />
+        {/* Outer Background (Desktop Only) */}
+        <div className="hidden lg:block absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(234,88,12,0.1),transparent_70%)]" />
+          <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ea580c 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
+        </div>
+
+        {/* Left-Side Navigation Menu (Desktop Only) */}
+        <AnimatePresence>
+          {showMenu && (
+            <motion.nav
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden lg:flex absolute left-12 top-0 bottom-0 flex-col justify-center gap-12 z-20"
+            >
+              {["About", "Skills", "Projects", "Experience", "Contact"].map((item, i) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + i * 0.1, duration: 0.8 }}
+                  className="group relative cursor-pointer"
+                >
+                  <span className="text-4xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative">
+                    {item}
+                  </span>
+                  {/* Glowing Orange Line on Hover */}
+                  <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-orange-500 group-hover:w-4 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
+                  {/* Subtle Text Reflection Glow */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 blur-xl bg-orange-500/20 transition-opacity duration-700 pointer-events-none" />
+                </motion.div>
+              ))}
+            </motion.nav>
+          )}
+        </AnimatePresence>
+
+        {/* Portal Container (Glassy Box on Desktop) */}
+        <motion.div 
+          animate={{ x: showMenu ? "calc(50vw - 50% - 15px)" : 0 }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full min-h-screen lg:absolute lg:inset-0 lg:m-auto lg:w-full lg:max-w-[min(calc(100vw-22rem),calc((100vh-30px)*16/9))] lg:aspect-video lg:h-auto lg:min-h-0 lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:backdrop-blur-xl lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden z-10 flex flex-col"
+        >
+          {/* Black Background Base */}
+          <div className="absolute inset-0 bg-black z-[-20] lg:bg-transparent" />
+          
       {/* Header Navigation */}
-      <header className="fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-start z-50 bg-black/50 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none">
-        <div className="flex flex-col gap-1">
+      <header className="absolute top-8 left-8 right-8 md:top-16 md:left-16 md:right-16 flex justify-between items-start z-50 bg-black/50 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none pointer-events-none">
+        <div className="flex flex-col gap-1 pointer-events-auto">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-lg md:text-2xl font-medium font-mono tracking-[-0.02em] leading-tight uppercase"
+            className="text-lg md:text-[1.3rem] font-medium font-mono tracking-[-0.02em] leading-tight uppercase"
           >
             AKSHATH //
             <br />
@@ -56,9 +102,9 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="max-w-[240px] md:max-w-xs text-[10px] md:text-xs text-zinc-400 mt-2 md:mt-3 leading-relaxed font-light"
+            className="max-w-[240px] md:max-w-xs text-[10px] md:text-[11px] text-zinc-400 mt-2 leading-relaxed font-light"
           >
-            Crafting bespoke web experiences with a focus on high-performance code for those who don't just browse the web—they build it.  Elevate.
+            Crafting bespoke web experiences with a focus on high-performance code for those who don't just browse the web—they build it. Elevate.
           </motion.p>
           
           <div className="flex gap-2 md:gap-3 mt-4 md:mt-6">
@@ -68,7 +114,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 + i * 0.1 }}
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group"
+                className="w-10 h-10 md:w-[2.3rem] md:h-[2.3rem] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group"
               >
                 <Icon size={18} className="group-hover:scale-110 transition-transform" />
               </motion.div>
@@ -76,7 +122,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-6 text-[11px] tracking-[0.3em] font-mono text-zinc-500 uppercase">
+        <div className="hidden md:flex items-center gap-6 text-[9px] tracking-[0.3em] font-mono text-zinc-500 uppercase pointer-events-auto">
           <span className="text-zinc-400">1/26</span>
           <div className="w-32 h-[1px] bg-zinc-800 relative">
             <div className="absolute top-0 left-0 w-1/4 h-full bg-zinc-300" />
@@ -86,7 +132,7 @@ export default function App() {
       </header>
 
       {/* Background Video (Desktop) */}
-      <div className="hidden lg:block fixed inset-0 overflow-hidden pointer-events-none z-[-10]">
+      <div className="hidden lg:block absolute inset-0 overflow-hidden pointer-events-none z-[-10]">
         {/* Intro Video */}
         <video
           autoPlay
@@ -117,7 +163,7 @@ export default function App() {
       </div>
 
       {/* Main Content Area */}
-      <main className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center z-10 lg:p-0">
+      <main className="relative flex-grow flex flex-col lg:flex-row items-center justify-center z-10 lg:p-0 min-h-screen lg:min-h-0">
         {/* Mobile Video Header */}
         <div className="lg:hidden w-full h-[50vh] relative overflow-hidden mb-12 bg-black">
           {/* Intro Video Mobile */}
@@ -215,11 +261,11 @@ export default function App() {
       </main>
 
       {/* Desktop Technical Specs - Right Side */}
-      <div className="hidden lg:block fixed right-10 top-1/2 -translate-y-1/2 w-80 z-40">
-        <h2 className="text-[11px] tracking-[0.3em] font-mono text-zinc-500 mb-8 uppercase font-medium">
+      <div className="hidden lg:block absolute right-16 top-[45%] -translate-y-1/2 w-64 z-40">
+        <h2 className="text-[9px] tracking-[0.3em] font-mono text-zinc-500 mb-6 uppercase font-medium">
           Technical Specs
         </h2>
-        <div className="space-y-6 font-mono text-[13px]">
+        <div className="space-y-4 font-mono text-[11px]">
           {[
             { label: "Optics", value: "React & TypeScript" },
             { label: "Logic", value: "Node.js & Express!" },
@@ -245,23 +291,23 @@ export default function App() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="hidden lg:block fixed bottom-10 left-10 p-10 rounded-[2.5rem] bg-zinc-900/30 backdrop-blur-2xl border border-zinc-800/40 w-[420px] z-40"
+        className="hidden lg:block absolute bottom-16 left-16 p-6 rounded-3xl bg-zinc-900/30 backdrop-blur-2xl border border-zinc-800/40 w-[300px] z-40"
       >
         <div className="flex flex-col gap-3">
-          <h3 className="text-[12px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
+          <h3 className="text-[10px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
             AK-01: SOURCE CODE
           </h3>
-          <p className="text-zinc-500 text-[14px] leading-relaxed mb-8 font-light">
+          <p className="text-zinc-500 text-[11px] leading-relaxed mb-6 font-light">
             High-performance logic and a clean stack for speed and clarity.!!
           </p>
-          <button className="w-fit px-8 py-3 rounded-full border border-zinc-700 text-[11px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 active:scale-95">
+          <button className="w-fit px-6 py-2 rounded-full border border-zinc-700 text-[9px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 active:scale-95">
             Add to Cart
           </button>
         </div>
       </motion.div>
 
       {/* Desktop Bottom Right Tags */}
-      <div className="hidden lg:flex fixed bottom-10 right-10 gap-3 z-40">
+      <div className="hidden lg:flex absolute bottom-16 right-16 gap-2 z-40">
         {[
           { label: "8K RAW", active: false },
           { label: "A+", active: false },
@@ -273,7 +319,7 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1 + i * 0.1 }}
-            className={`px-6 py-3 rounded-full text-[10px] font-mono tracking-[0.2em] border flex items-center gap-3 transition-all duration-300 cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border flex items-center gap-2 transition-all duration-300 cursor-pointer ${
               tag.active 
                 ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
                 : "bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
@@ -286,11 +332,13 @@ export default function App() {
       </div>
 
       {/* Decorative Background Elements */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 pointer-events-none z-0 lg:hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_70%)]" />
         <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
       </div>
+
+        </motion.div> {/* End Portal Container */}
     </div>
-  </div>
-);
+    </div>
+  );
 }

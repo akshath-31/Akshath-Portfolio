@@ -5,7 +5,7 @@ interface LoadingScreenProps {
   onComplete: () => void;
 }
 
-const words = ["Design", "Create", "Inspire"];
+const words = ["Imagine", "Innovate", "Inspire"];
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [wordIndex, setWordIndex] = useState(0);
@@ -24,7 +24,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         clearInterval(interval);
         return prev;
       });
-    }, 900);
+    }, 1600);
 
     return () => clearInterval(interval);
   }, []);
@@ -32,7 +32,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   // Counter logic
   useEffect(() => {
     let startTime: number | null = null;
-    const duration = 2700; // 2.7 seconds
+    const duration = 5000; // 5.0 seconds
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -65,9 +65,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="absolute top-8 left-8 md:top-12 md:left-12 text-xs md:text-sm text-[#888888] uppercase tracking-[0.3em]"
+        className="absolute top-8 left-8 md:top-12 md:left-12 text-lg md:text-xl text-orange-500 font-mono uppercase tracking-[0.2em] flex items-center"
       >
-        Portfolio
+        loading.akshath.dev
+        <span className="flex w-4">
+          <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, times: [0, 0.5, 1], delay: 0 }}>.</motion.span>
+          <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, times: [0, 0.5, 1], delay: 0.2 }}>.</motion.span>
+          <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, times: [0, 0.5, 1], delay: 0.4 }}>.</motion.span>
+        </span>
       </motion.div>
 
       {/* Element 2: Rotating Words */}
@@ -79,7 +84,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="text-4xl md:text-6xl lg:text-7xl font-display italic text-[#f5f5f5]/80"
+            className="text-4xl md:text-6xl lg:text-7xl font-mono uppercase text-orange-500"
           >
             {words[wordIndex]}
           </motion.span>
@@ -91,7 +96,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-6xl md:text-8xl lg:text-9xl font-display text-[#f5f5f5] tabular-nums"
+        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-6xl md:text-8xl lg:text-9xl font-mono uppercase text-orange-500 tabular-nums"
       >
         {Math.round(progress).toString().padStart(3, '0')}
       </motion.div>
@@ -101,8 +106,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <motion.div
           className="h-full origin-left"
           style={{
-            background: "linear-gradient(90deg, #89AACC 0%, #4E85BF 100%)",
-            boxShadow: "0 0 8px rgba(137, 170, 204, 0.35)",
+            background: "linear-gradient(90deg, #fdba74 0%, #ea580c 100%)",
+            boxShadow: "0 0 8px rgba(234, 88, 12, 0.35)",
           }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: progress / 100 }}
