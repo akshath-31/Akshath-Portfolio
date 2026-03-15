@@ -21,10 +21,8 @@ export default function TopNav() {
         className="flex flex-col gap-1 cursor-pointer group"
         onClick={() => navigate('/')}
       >
-        <h1 className="text-lg md:text-[1.3rem] font-medium font-mono tracking-[-0.02em] leading-tight uppercase transition-colors group-hover:text-orange-500">
-          AKSHATH //
-          <br />
-          <span className="text-zinc-100 group-hover:text-orange-400 transition-colors">DIGITAL ARCHITECT</span>
+        <h1 className="text-lg md:text-[1.3rem] font-medium font-mono tracking-[-0.02em] leading-tight uppercase transition-colors text-orange-500 hover:text-orange-400">
+          AKSHATH SENTHILKUMAR
         </h1>
       </motion.div>
 
