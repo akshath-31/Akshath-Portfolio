@@ -5,10 +5,19 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Box, Layers, Zap, ChevronRight } from "lucide-react";
+import { Linkedin, Github, Instagram, FileText, ChevronRight } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+
+// LeetCode Icon component string
+const LeetCodeIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.483 0a1.374 1.374 0 0 0 -0.961 0.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0 -1.209 2.104 5.35 5.35 0 0 0 -0.125 0.513 5.527 5.527 0 0 0 0.062 2.362 5.83 5.83 0 0 0 0.349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193 0.039 0.038c2.248 2.165 5.852 2.133 8.063 -0.074l2.396 -2.392c0.54 -0.54 0.54 -1.414 0.003 -1.955a1.378 1.378 0 0 0 -1.951 -0.003l-2.396 2.392a3.021 3.021 0 0 1 -4.205 0.038l-0.02 -0.019 -4.276 -4.193c-0.652 -0.64 -0.972 -1.469 -0.948 -2.263a2.68 2.68 0 0 1 0.066 -0.523 2.545 2.545 0 0 1 0.619 -1.164L9.13 8.114c1.058 -1.134 3.204 -1.27 4.43 -0.278l3.501 2.831c0.593 0.48 1.461 0.387 1.94 -0.207a1.384 1.384 0 0 0 -0.207 -1.943l-3.5 -2.831c-0.8 -0.647 -1.766 -1.045 -2.774 -1.202l2.015 -2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0 -1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38 -1.382 1.38 1.38 0 0 0 -1.38 -1.382z" />
+  </svg>
+);
 import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isVideoTransitioning, setIsVideoTransitioning] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -85,6 +94,7 @@ export default function App() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 + i * 0.1, duration: 0.8 }}
                   className="group relative cursor-pointer"
+                  onClick={() => navigate(`/${item.toLowerCase()}`)}
                 >
                   <span className="text-4xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative">
                     {item}
@@ -114,42 +124,76 @@ export default function App() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-lg md:text-[1.3rem] font-medium font-mono tracking-[-0.02em] leading-tight uppercase"
+            className="font-medium tracking-[-0.02em] leading-[1.1] uppercase cursor-default"
           >
-            AKSHATH //
-            <br />
-            <span className="text-zinc-100">DIGITAL ARCHITECT</span>
+            <span className="text-xl md:text-[1.8rem] font-bold text-white block mb-2">AKSHATH SENTHILKUMAR</span>
+            <div className="flex flex-col text-lg md:text-[1.3rem] font-mono text-white font-medium">
+              <span>&lt;Full Stack Dev/&gt;</span>
+              <span>&lt;DS &amp; ML Engineer/&gt;</span>
+            </div>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="max-w-[240px] md:max-w-xs text-[10px] md:text-[11px] text-zinc-400 mt-2 leading-relaxed font-light"
+            className="max-w-[240px] md:max-w-xs text-[13px] md:text-[14px] text-zinc-400 mt-2 leading-relaxed font-light"
           >
-            Crafting bespoke web experiences with a focus on high-performance code for those who don't just browse the web—they build it. Elevate.
+            Turning raw data into decisions and ideas into deployed products. Full-stack by craft, data-driven by instinct.
           </motion.p>
           
-          <div className="flex gap-2 md:gap-3 mt-4 md:mt-6">
-            {[Box, Layers, Zap].map((Icon, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                className="w-10 h-10 md:w-[2.3rem] md:h-[2.3rem] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group"
-              >
-                <Icon size={18} className="group-hover:scale-110 transition-transform" />
-              </motion.div>
-            ))}
+          <div className="flex flex-col gap-3 mt-4 md:mt-6">
+            <div className="flex gap-2 md:gap-3">
+              {[
+                { Icon: Linkedin, link: "https://www.linkedin.com/in/akshathsenthilkumar/", label: "LinkedIn" },
+                { Icon: Github, link: "https://github.com/akshath-31", label: "GitHub" },
+                { Icon: Instagram, link: "https://www.instagram.com/akshath.31/", label: "Instagram" }
+              ].map(({ Icon, link, label }, i) => (
+                <motion.a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="w-10 h-10 md:w-[2.3rem] md:h-[2.3rem] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
+                >
+                  <Icon size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="absolute -top-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
+                </motion.a>
+              ))}
+            </div>
+            <div className="flex gap-2 md:gap-3">
+              {[
+                { Icon: LeetCodeIcon, link: "https://leetcode.com/u/akshath-31/", label: "LeetCode" },
+                { Icon: FileText, link: "https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing", label: "Resume" }
+              ].map(({ Icon, link, label }, i) => (
+                <motion.a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + i * 0.1 }}
+                  className="w-10 h-10 md:w-[2.3rem] md:h-[2.3rem] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
+                >
+                  <Icon size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="absolute -bottom-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
+                </motion.a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-6 text-[9px] tracking-[0.3em] font-mono text-zinc-500 uppercase pointer-events-auto">
-          <span className="text-zinc-400">1/26</span>
-          <div className="w-32 h-[1px] bg-zinc-800 relative">
-            <div className="absolute top-0 left-0 w-1/4 h-full bg-zinc-300" />
+        <div className="hidden md:flex items-center gap-4 text-[9px] tracking-[0.3em] font-mono uppercase pointer-events-auto">
+          <div className="relative">
+            <div className="w-24 h-[2px] bg-zinc-800 relative overflow-hidden">
+              <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[35%]" />
+            </div>
+            <span className="absolute -bottom-6 left-0 text-zinc-200 text-[10px]">35%</span>
           </div>
-          <span className="text-zinc-200 hover:text-white cursor-pointer transition-colors">Next Product</span>
+          <span className="text-zinc-200 hover:text-white cursor-pointer transition-colors">NEXT PRODUCT →  Skill Swap</span>
         </div>
       </header>
 
@@ -221,19 +265,19 @@ export default function App() {
 
         <div className="w-full max-w-md px-6 lg:px-0 flex flex-col items-center">
           {/* Mobile Technical Specs */}
-          <div className="lg:hidden w-full mb-12">
-            <h2 className="text-[10px] tracking-[0.3em] font-mono text-zinc-500 mb-6 uppercase font-medium">
-              Technical Specs
+          <div className="lg:hidden w-full mb-12 scale-110">
+            <h2 className="text-[11px] tracking-[0.3em] font-mono text-black mb-6 uppercase font-bold">
+              CURRENT STATUS
             </h2>
             <div className="space-y-4 font-mono text-[12px]">
               {[
-                { label: "Optics", value: "React & TypeScript" },
-                { label: "Logic", value: "Node.js & Express!" },
-                { label: "Motion", value: "Vite & Cloud Run" },
-                { label: "Build", value: "Production Ready Systems" },
+                { label: "STATUS", value: "Available for Internships" },
+                { label: "FOCUS", value: "Data Analysis & AI Products" },
+                { label: "LOCATION", value: "Chennai, India" },
+                { label: "SPECIALTY", value: "Full-Stack + ML Systems" },
               ].map((spec, i) => (
                 <div key={i} className="flex justify-between border-b border-zinc-900 pb-2">
-                  <span className="text-zinc-500">{spec.label}</span>
+                  <span className="text-black">{spec.label}</span>
                   <span className="text-zinc-200">{spec.value}</span>
                 </div>
               ))}
@@ -245,54 +289,64 @@ export default function App() {
 
           {/* Mobile Card & Tags */}
           <div className="lg:hidden w-full space-y-8 mt-12 pb-12">
-            <div className="p-8 rounded-3xl bg-zinc-900/30 backdrop-blur-2xl border border-zinc-800/40">
+            <div className="p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
               <div className="flex flex-col gap-3">
                 <h3 className="text-[11px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
-                  AK-01: SOURCE CODE
+                  CURRENT PROJECT
                 </h3>
-                <p className="text-zinc-500 text-[13px] leading-relaxed mb-6 font-light">
-                  High-performance logic and a clean stack for speed and clarity.!!
+                <div className="text-lg text-white font-medium">J.A.R.V.I.S</div>
+                <p className="text-zinc-500 text-[16px] leading-relaxed mb-[7px] font-light">
+                  "Just a rather very intelligent system. You know right 😉"
                 </p>
-                <button className="w-full py-4 rounded-full border border-zinc-700 text-[10px] font-mono uppercase tracking-[0.2em] active:bg-white active:text-black transition-all">
-                  Add to Cart
-                </button>
+                <div className="flex flex-col gap-1 mb-[7px]">
+                  <div className="w-full h-[2px] bg-zinc-800 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
+                  </div>
+                  <span className="text-zinc-200 text-[10px] font-mono tracking-widest">60%</span>
+                </div>
+                <a href="https://github.com/akshath-31/jarvis" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full border border-zinc-700 text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black active:bg-white active:text-black transition-all flex items-center justify-center">
+                  COLLABORATE
+                </a>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-2 justify-center">
-              {[
-                { label: "8K RAW", active: false },
-                { label: "A+", active: false },
-                { label: "ULTRA-WIDE", active: false },
-                { label: "NEURAL-SYNC", active: true },
-              ].map((tag, i) => (
-                <div
-                  key={i}
-                  className={`px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 ${
-                    tag.active 
-                      ? "bg-white text-black border-white" 
-                      : "bg-zinc-900/40 text-zinc-500 border-zinc-800/50"
-                  }`}
-                >
-                  {tag.label}
-                </div>
-              ))}
+              <a
+                href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800"
+              >
+                MY STACK
+              </a>
+              <Link
+                to="/projects"
+                className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800"
+              >
+                PORTFOLIO
+              </Link>
+              <Link
+                to="/contact"
+                className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-white text-black border-white"
+              >
+                GET IN TOUCH
+              </Link>
             </div>
           </div>
         </div>
       </main>
 
       {/* Desktop Technical Specs - Right Side */}
-      <div className="hidden lg:block absolute right-16 top-[45%] -translate-y-1/2 w-64 z-40">
-        <h2 className="text-[9px] tracking-[0.3em] font-mono text-zinc-500 mb-6 uppercase font-medium">
-          Technical Specs
+      <div className="hidden lg:block absolute right-16 top-[45%] -translate-y-1/2 w-64 z-40 scale-110">
+        <h2 className="text-[10px] tracking-[0.3em] font-mono text-black mb-6 uppercase font-bold">
+          CURRENT STATUS
         </h2>
         <div className="space-y-4 font-mono text-[11px]">
           {[
-            { label: "Optics", value: "React & TypeScript" },
-            { label: "Logic", value: "Node.js & Express!" },
-            { label: "Motion", value: "Vite & Cloud Run" },
-            { label: "Build", value: "Production Ready Systems" },
+            { label: "STATUS", value: "Available for Internships" },
+            { label: "FOCUS", value: "Data Analysis & AI Products" },
+            { label: "LOCATION", value: "Chennai, India" },
+            { label: "SPECIALTY", value: "Full-Stack + ML Systems" },
           ].map((spec, i) => (
             <motion.div 
               key={i}
@@ -301,8 +355,8 @@ export default function App() {
               transition={{ delay: 0.5 + i * 0.1 }}
               className="flex justify-between border-b border-zinc-900 pb-3 group cursor-default"
             >
-              <span className="text-zinc-500 group-hover:text-zinc-400 transition-colors">{spec.label}</span>
-              <span className="text-zinc-200 font-medium">{spec.value}</span>
+              <span className="text-black group-hover:text-zinc-800 transition-colors">{spec.label}</span>
+              <span className="text-zinc-200 font-medium text-right">{spec.value}</span>
             </motion.div>
           ))}
         </div>
@@ -313,44 +367,65 @@ export default function App() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="hidden lg:block absolute bottom-16 left-16 p-6 rounded-3xl bg-zinc-900/30 backdrop-blur-2xl border border-zinc-800/40 w-[300px] z-40"
+        className="hidden lg:block absolute bottom-[26px] left-16 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 w-[300px] z-40"
       >
         <div className="flex flex-col gap-3">
           <h3 className="text-[10px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
-            AK-01: SOURCE CODE
+            CURRENT PROJECT
           </h3>
-          <p className="text-zinc-500 text-[11px] leading-relaxed mb-6 font-light">
-            High-performance logic and a clean stack for speed and clarity.!!
+          <div className="text-white text-sm font-medium">J.A.R.V.I.S</div>
+          <p className="text-zinc-500 text-[14px] leading-relaxed mb-[7px] font-light">
+            "Just a rather very intelligent system. You know right 😉"
           </p>
-          <button className="w-fit px-6 py-2 rounded-full border border-zinc-700 text-[9px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 active:scale-95">
-            Add to Cart
-          </button>
+          <div className="flex flex-col gap-1 mb-[7px] w-[130px]">
+            <div className="w-full h-[2px] bg-zinc-800 relative overflow-hidden">
+              <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
+            </div>
+            <span className="text-zinc-200 text-[10px] font-mono tracking-widest">60%</span>
+          </div>
+          <a href="https://github.com/akshath-31/jarvis" target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-2 rounded-full border border-zinc-700 text-[9px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 active:scale-95 flex items-center justify-center">
+            COLLABORATE
+          </a>
         </div>
       </motion.div>
 
       {/* Desktop Bottom Right Tags */}
       <div className="hidden lg:flex absolute bottom-16 right-16 gap-2 z-40">
-        {[
-          { label: "8K RAW", active: false },
-          { label: "A+", active: false },
-          { label: "ULTRA-WIDE", active: false },
-          { label: "NEURAL-SYNC", active: true },
-        ].map((tag, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1 + i * 0.1 }}
-            className={`px-4 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border flex items-center gap-2 transition-all duration-300 cursor-pointer ${
-              tag.active 
-                ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
-                : "bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
-            }`}
+        <motion.a
+          href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1 }}
+          className="px-4 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border flex items-center gap-2 transition-all duration-300 cursor-pointer bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
+        >
+          MY STACK
+        </motion.a>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.1 }}
+        >
+          <Link
+            to="/projects"
+            className="flex px-4 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border items-center gap-2 transition-all duration-300 cursor-pointer bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
           >
-            {tag.label}
-            {tag.active && <ChevronRight size={14} className="rotate-[-45deg]" />}
-          </motion.div>
-        ))}
+            PORTFOLIO
+          </Link>
+        </motion.div>
+        <motion.div
+           initial={{ opacity: 0, scale: 0.9 }}
+           animate={{ opacity: 1, scale: 1 }}
+           transition={{ delay: 1.2 }}
+        >
+          <Link
+            to="/contact"
+            className="flex px-6 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border items-center transition-all duration-300 cursor-pointer bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          >
+            GET IN TOUCH
+          </Link>
+        </motion.div>
       </div>
 
       {/* Decorative Background Elements */}
