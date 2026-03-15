@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Box, Layers, Zap, ChevronRight } from "lucide-react";
 import LoadingScreen from "./components/LoadingScreen";
@@ -12,8 +12,30 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isVideoTransitioning, setIsVideoTransitioning] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [siteLoaded, setSiteLoaded] = useState(false);
+
+  useEffect(() => {
+    const handleLoad = () => setSiteLoaded(true);
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, []);
+
+  const introVideoRefDesktop = useRef<HTMLVideoElement>(null);
+  const introVideoRefMobile = useRef<HTMLVideoElement>(null);
   const loopVideoRefDesktop = useRef<HTMLVideoElement>(null);
   const loopVideoRefMobile = useRef<HTMLVideoElement>(null);
+
+  // Trigger video playback *only* when the loading screen fully completely disappears
+  useEffect(() => {
+    if (!isLoading) {
+      if (introVideoRefDesktop.current) introVideoRefDesktop.current.play();
+      if (introVideoRefMobile.current) introVideoRefMobile.current.play();
+    }
+  }, [isLoading]);
 
   const handleVideoEnded = () => {
     setIsVideoTransitioning(true);
@@ -30,7 +52,7 @@ export default function App() {
     <div className="min-h-screen text-white font-sans selection:bg-white selection:text-black overflow-x-hidden overflow-y-auto lg:overflow-hidden">
       <AnimatePresence mode="wait">
         {isLoading && (
-          <LoadingScreen onComplete={() => setIsLoading(false)} />
+          <LoadingScreen onComplete={() => setIsLoading(false)} isReady={siteLoaded} />
         )}
       </AnimatePresence>
 
@@ -135,7 +157,7 @@ export default function App() {
       <div className="hidden lg:block absolute inset-0 overflow-hidden pointer-events-none z-[-10]">
         {/* Intro Video */}
         <video
-          autoPlay
+          ref={introVideoRefDesktop}
           muted
           PlaysInline
           onEnded={handleVideoEnded}
@@ -143,7 +165,7 @@ export default function App() {
             isVideoTransitioning ? "opacity-0" : "opacity-80"
           }`}
         >
-          <source src="/Aks_Tilt.mp4" type="video/mp4" />
+          <source src="/Aks_Tilt.webm" type="video/webm" />
         </video>
         
         {/* Loop Video */}
@@ -156,7 +178,7 @@ export default function App() {
             isVideoTransitioning ? "opacity-80" : "opacity-0"
           }`}
         >
-          <source src="/Aks_Blink_Loop.mp4" type="video/mp4" />
+          <source src="/Aks_Blink_Loop.webm" type="video/webm" />
         </video>
         {/* Overlays to ensure text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-40" />
@@ -168,7 +190,7 @@ export default function App() {
         <div className="lg:hidden w-full h-[50vh] relative overflow-hidden mb-12 bg-black">
           {/* Intro Video Mobile */}
           <video
-            autoPlay
+            ref={introVideoRefMobile}
             muted
             playsInline
             onEnded={handleVideoEnded}
@@ -176,7 +198,7 @@ export default function App() {
               isVideoTransitioning ? "opacity-0" : "opacity-80"
             }`}
           >
-            <source src="/Aks_Tilt.mp4" type="video/mp4" />
+            <source src="/Aks_Tilt.webm" type="video/webm" />
           </video>
 
           {/* Loop Video Mobile */}
@@ -189,7 +211,7 @@ export default function App() {
               isVideoTransitioning ? "opacity-80" : "opacity-0"
             }`}
           >
-            <source src="/Aks_Blink_Loop.mp4" type="video/mp4" />
+            <source src="/Aks_Blink_Loop.webm" type="video/webm" />
           </video>
           {/* Top Gradient */}
           <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black to-transparent opacity-80" />

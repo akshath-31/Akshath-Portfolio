@@ -3,18 +3,24 @@ import { motion, AnimatePresence } from "motion/react";
 
 interface LoadingScreenProps {
   onComplete: () => void;
+  isReady: boolean;
 }
 
 const words = ["Imagine", "Innovate", "Inspire"];
 
-export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
+export default function LoadingScreen({ onComplete, isReady }: LoadingScreenProps) {
   const [wordIndex, setWordIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const onCompleteRef = useRef(onComplete);
+  const isReadyRef = useRef(isReady);
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
+
+  useEffect(() => {
+    isReadyRef.current = isReady;
+  }, [isReady]);
 
   // Word rotation logic
   useEffect(() => {
@@ -32,26 +38,33 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   // Counter logic
   useEffect(() => {
     let startTime: number | null = null;
-    const duration = 5000; // 5.0 seconds
+    let animationFrameId: number;
+    const duration = 4000; // 4.0 seconds
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const currentProgress = Math.min((elapsed / duration) * 100, 100);
-      
-      setProgress(currentProgress);
+        const elapsed = timestamp - startTime;
 
-      if (currentProgress < 100) {
-        requestAnimationFrame(animate);
+      if (elapsed < duration) {
+        setProgress((elapsed / duration) * 100);
+        animationFrameId = requestAnimationFrame(animate);
       } else {
-        // Progress reached 100
-        setTimeout(() => {
-          onCompleteRef.current();
-        }, 400);
+        if (isReadyRef.current) {
+          setProgress(100);
+          setTimeout(() => {
+            onCompleteRef.current();
+          }, 400);
+        } else {
+          // If 4 seconds have passed but site isn't ready, freeze at 99
+          setProgress(99);
+          animationFrameId = requestAnimationFrame(animate);
+        }
       }
     };
 
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
+    
+    return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
   return (
@@ -65,7 +78,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="absolute top-8 left-8 md:top-12 md:left-12 text-lg md:text-xl text-orange-500 font-mono uppercase tracking-[0.2em] flex items-center"
+        className="absolute top-8 left-8 md:top-12 md:left-12 text-lg md:text-xl text-orange-500 font-sans lowercase tracking-[0.3em] flex items-center"
       >
         loading.akshath.dev
         <span className="flex w-4">
@@ -84,7 +97,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="text-4xl md:text-6xl lg:text-7xl font-mono uppercase text-orange-500"
+            className="text-5xl md:text-[4.8rem] lg:text-[6.4rem] font-display italic text-orange-500 font-normal"
           >
             {words[wordIndex]}
           </motion.span>
@@ -96,7 +109,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-6xl md:text-8xl lg:text-9xl font-mono uppercase text-orange-500 tabular-nums"
+        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-[2.4rem] md:text-[4.5rem] lg:text-[5.6rem] font-display italic text-orange-500 tabular-nums font-normal"
       >
         {Math.round(progress).toString().padStart(3, '0')}
       </motion.div>
