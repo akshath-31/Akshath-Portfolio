@@ -20,8 +20,10 @@ export default function App() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isVideoTransitioning, setIsVideoTransitioning] = useState(false);
+  const [shiftPortal, setShiftPortal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [siteLoaded, setSiteLoaded] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const handleLoad = () => setSiteLoaded(true);
@@ -31,6 +33,16 @@ export default function App() {
       window.addEventListener('load', handleLoad);
       return () => window.removeEventListener('load', handleLoad);
     }
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+
+    return () => mediaQuery.removeEventListener("change", updateViewport);
   }, []);
 
   const introVideoRefDesktop = useRef<HTMLVideoElement>(null);
@@ -48,13 +60,21 @@ export default function App() {
 
   const handleVideoEnded = () => {
     setIsVideoTransitioning(true);
-    setShowMenu(true);
+
     if (loopVideoRefDesktop.current) {
       loopVideoRefDesktop.current.play();
     }
     if (loopVideoRefMobile.current) {
       loopVideoRefMobile.current.play();
     }
+
+    window.setTimeout(() => {
+      setShiftPortal(true);
+    }, 180);
+
+    window.setTimeout(() => {
+      setShowMenu(true);
+    }, 520);
   };
 
   return (
@@ -110,10 +130,16 @@ export default function App() {
         </AnimatePresence>
 
         {/* Portal Container (Glassy Box on Desktop) */}
-        <motion.div 
-          animate={{ x: showMenu ? "calc(50vw - 50% - 15px)" : 0 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full min-h-screen lg:absolute lg:inset-0 lg:m-auto lg:w-full lg:max-w-[min(calc(100vw-22rem),calc((100vh-30px)*16/9))] lg:aspect-video lg:h-auto lg:min-h-0 lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:backdrop-blur-xl lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden z-10 flex flex-col"
+        <motion.div
+          animate={{ x: isDesktop && shiftPortal ? 170 : 0 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          style={{ willChange: "transform" }}
+          className="relative w-full min-h-screen lg:absolute lg:inset-0 lg:m-auto lg:w-full lg:max-w-[min(calc(100vw-22rem),calc((100vh-30px)*16/9))] lg:aspect-video lg:h-auto lg:min-h-0 z-10 transform-gpu"
+        >
+        <div
+          className={`relative w-full min-h-screen lg:h-full lg:min-h-0 lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden flex flex-col ${
+            isDesktop && shiftPortal ? "lg:backdrop-blur-md" : "lg:backdrop-blur-xl"
+          }`}
         >
           {/* Black Background Base */}
           <div className="absolute inset-0 bg-black z-[-20] lg:bg-transparent" />
@@ -434,6 +460,7 @@ export default function App() {
         <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
       </div>
 
+        </div>
         </motion.div> {/* End Portal Container */}
     </div>
     </div>
