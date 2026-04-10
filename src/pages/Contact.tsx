@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import TopNav from "../components/TopNav";
+import ContactForm from "../components/ContactForm";
 
 export default function Contact() {
   return (
@@ -17,17 +18,14 @@ export default function Contact() {
             <h2 className="text-[10px] tracking-[0.3em] font-mono text-orange-500 uppercase font-medium">
               05 // Connect
             </h2>
-            <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight">
-              Get in Touch
+            <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight text-orange-500">
+              Let's Connect
             </h1>
           </div>
           
           <div className="w-24 h-px bg-zinc-800" />
-          
-          <p className="max-w-2xl text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-            Ready to build something extraordinary? Let's talk architecture, systems, and design.
-            (Content placeholder)
-          </p>
+
+          <ContactForm />
         </motion.div>
       </main>
 

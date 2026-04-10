@@ -19,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/projects" element={<Projects />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/contacts" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
