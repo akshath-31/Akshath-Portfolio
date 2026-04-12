@@ -53,8 +53,8 @@ export default function Experience() {
                       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
                         <div>
                           <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-2 block">Internship</span>
-                          <h3 className="text-2xl md:text-[28px] font-mono font-bold tracking-tight text-white mb-2">Data Science and Digital Marketing Intern</h3>
-                          <div className="text-lg text-[#aaa] font-sans">Arctictern</div>
+                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1 whitespace-nowrap truncate">Data Science and Digital Marketing Intern</h3>
+                          <div className="text-[14px] text-[#aaa] font-sans">Arctictern</div>
                         </div>
                         <div className="text-[12px] md:text-[13px] font-mono text-[#888] bg-[#111] px-4 py-2 rounded-full border border-[#222] whitespace-nowrap self-start">
                           June 2025 → July 2025
