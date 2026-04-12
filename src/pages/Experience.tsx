@@ -1,9 +1,10 @@
 import { motion } from "motion/react";
 import TopNav from "../components/TopNav";
 
-const internshipTech = ["React", "FastAPI", "Gemini", "Supabase"];
+const internshipTech = ["React", "Data Science", "Gemini", "Time Series"];
 const vazhikatigalTech = ["React", "FastAPI", "Gemini", "Supabase", "Google Maps API"];
 const tanfinetTech = ["PyTorch", "FastAPI", "React", "Gemini API"];
+const trapTech = ["Fintech", "React", "Node.js"];
 const researchTech = ["SAM2", "Sentinel-2", "Gemini 2.0", "Python"];
 
 export default function Experience() {
@@ -52,14 +53,14 @@ export default function Experience() {
                       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-5">
                         <div>
                           <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-2 block">Internship</span>
-                          <h3 className="text-2xl md:text-[28px] font-mono font-bold tracking-tight text-white mb-2">AI Engineer Intern</h3>
+                          <h3 className="text-2xl md:text-[28px] font-mono font-bold tracking-tight text-white mb-2">Data Science and Digital Marketing Intern</h3>
                           <div className="text-lg text-[#aaa] font-sans">Arctictern</div>
                         </div>
                         <div className="text-[12px] md:text-[13px] font-mono text-[#888] bg-[#111] px-4 py-2 rounded-full border border-[#222] whitespace-nowrap self-start">
-                          2024 → Present
+                          June 2025 → July 2025
                         </div>
                       </div>
-                      <p className="text-[#ccc] font-sans text-[15px] leading-relaxed mb-8">Building AI-powered full stack products end to end.</p>
+                      <p className="text-[#ccc] font-sans text-[15px] leading-relaxed mb-8">Built time series forecasting models.</p>
                       <div className="flex flex-wrap gap-2">
                         {internshipTech.map((t) => (
                           <span key={t} className="px-3 py-1 border border-[#e85d04]/40 text-[#e85d04] rounded-full text-[11px] font-mono bg-[#e85d04]/5 transition-all duration-200 group-hover:bg-[#e85d04] group-hover:text-[#09090b] group-hover:font-semibold">
@@ -112,13 +113,35 @@ export default function Experience() {
                       <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
                         <div>
                           <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Hackathon</span>
-                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">Tanfinet</h3>
-                          <div className="text-[14px] text-[#aaa] font-sans">NIT Trichy 2024</div>
+                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">Tanfinet Fault Detector</h3>
+                          <div className="text-[14px] text-[#aaa] font-sans">Tanfinet Hackathon</div>
                         </div>
                       </div>
                       <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mb-6">AI-powered fault detection system for BSNL Fibernet.</p>
                       <div className="flex flex-wrap gap-2 mt-auto">
                         {tanfinetTech.map((t) => (
+                          <span key={t} className="px-3 py-1 border border-[#e85d04]/40 text-[#e85d04] rounded-full text-[11px] font-mono bg-[#e85d04]/5 transition-all duration-200 group-hover:bg-[#e85d04] group-hover:text-[#09090b] group-hover:font-semibold">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* T.R.A.P */}
+                  <div className="relative pl-12 md:pl-16 group transition-all duration-200 hover:translate-x-1">
+                    <div className="absolute left-[8px] top-[26px] w-4 h-4 rounded-full border-2 border-[#e85d04] bg-[#09090b] transition-all duration-200 group-hover:scale-125 group-hover:bg-[#e85d04] z-10 shadow-[0_0_0_4px_#09090b]" />
+                    <div className="bg-[#161616] p-6 px-8 rounded-[16px] border border-[#2a2a2a] border-l-[3px] border-l-[#2a2a2a] group-hover:border-l-[#e85d04] transition-all duration-200">
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
+                        <div>
+                          <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Hackathon</span>
+                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">T.R.A.P</h3>
+                          <div className="text-[14px] text-[#aaa] font-sans">NIT Trichy</div>
+                        </div>
+                      </div>
+                      <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mb-6">Fintech solution built at NIT Trichy's national hackathon targeting financial inclusion and social impact. Secured 3rd place.</p>
+                      <div className="flex flex-wrap gap-2 mt-auto">
+                        {trapTech.map((t) => (
                           <span key={t} className="px-3 py-1 border border-[#e85d04]/40 text-[#e85d04] rounded-full text-[11px] font-mono bg-[#e85d04]/5 transition-all duration-200 group-hover:bg-[#e85d04] group-hover:text-[#09090b] group-hover:font-semibold">
                             {t}
                           </span>
@@ -180,10 +203,27 @@ export default function Experience() {
                           <div className="text-[14px] text-[#aaa] font-sans">B.Tech CSE — Data Science Specialization</div>
                         </div>
                         <div className="text-[11px] font-mono text-[#888] bg-[#111] px-3 py-1.5 rounded-full border border-[#222] whitespace-nowrap self-start">
-                          2022 → 2026 · Chennai, India
+                          2023 → Present · Chennai, India
                         </div>
                       </div>
                       <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mt-4">Relevant coursework in ML, DAA, Full Stack Development, and Research.</p>
+                    </div>
+                  </div>
+
+                  {/* PSBB */}
+                  <div className="relative pl-12 md:pl-16 group transition-all duration-200 hover:translate-x-1">
+                    <div className="absolute left-[8px] top-[26px] w-4 h-4 rounded-full border-2 border-[#e85d04] bg-[#09090b] transition-all duration-200 group-hover:scale-125 group-hover:bg-[#e85d04] z-10 shadow-[0_0_0_4px_#09090b]" />
+                    <div className="bg-[#161616] p-6 px-8 rounded-[16px] border border-[#2a2a2a] border-l-[3px] border-l-[#2a2a2a] group-hover:border-l-[#e85d04] transition-all duration-200">
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
+                        <div>
+                          <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Education</span>
+                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">The PSBB Millennium School</h3>
+                          <div className="text-[14px] text-[#aaa] font-sans">PreKG — 12th Grade</div>
+                        </div>
+                        <div className="text-[11px] font-mono text-[#888] bg-[#111] px-3 py-1.5 rounded-full border border-[#222] whitespace-nowrap self-start">
+                          2008 → 2023
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
