@@ -64,13 +64,14 @@ export default function Projects() {
 
       <div className="pt-32 pb-24 px-8 md:px-16 max-w-[1400px] mx-auto">
         {/* Header section */}
-        <div className="mb-16">
-          <h2 className="text-[#e85d04] font-mono text-[11px] tracking-[3px] uppercase mb-4">
+        <div className="mb-16 flex flex-col gap-4 items-start">
+          <h2 className="text-[#e85d04] font-mono text-[11px] tracking-[3px] uppercase">
             03 // PORTFOLIO
           </h2>
-          <h1 className="text-4xl md:text-5xl lg:text-[64px] font-serif text-[#e85d04] leading-[1.1] tracking-tight">
-            Selected<br />Work
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight text-orange-500">
+            Selected Work
           </h1>
+          <div className="w-24 h-px bg-zinc-800 mt-2" />
         </div>
 
         {/* Projects Grid Container (Pairs) */}

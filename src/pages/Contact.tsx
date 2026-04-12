@@ -12,18 +12,17 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-8"
+          className="space-y-12"
         >
-          <div className="space-y-4">
+          <div className="flex flex-col gap-4 items-start">
             <h2 className="text-[10px] tracking-[0.3em] font-mono text-orange-500 uppercase font-medium">
               05 // Connect
             </h2>
             <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight text-orange-500">
               Let's Connect
             </h1>
+            <div className="w-24 h-px bg-zinc-800 mt-2" />
           </div>
-          
-          <div className="w-24 h-px bg-zinc-800" />
 
           <ContactForm />
         </motion.div>
