@@ -39,7 +39,7 @@ export default function Experience() {
             {/* WORK EXPERIENCE SECTION */}
             <div>
               <div className="mb-10">
-                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block pr-12">
+                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block">
                   Work Experience
                 </h2>
               </div>
@@ -77,7 +77,7 @@ export default function Experience() {
             {/* HACKATHONS SECTION */}
             <div>
               <div className="mb-10">
-                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block pr-12">
+                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block">
                   Hackathons
                 </h2>
               </div>
@@ -153,30 +153,43 @@ export default function Experience() {
               </div>
             </div>
 
-            {/* CERTIFICATIONS SECTION */}
+            {/* RESEARCH SECTION */}
             <div>
               <div className="mb-10">
-                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block pr-12">
-                  Certifications
+                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block">
+                  Research
                 </h2>
               </div>
               <div className="relative w-full">
                 <div className="absolute left-[15px] top-6 bottom-4 w-[2px] bg-[#e85d04]/20" />
                 <div className="flex flex-col gap-10">
                   <div className="relative pl-12 md:pl-16 group transition-all duration-200 hover:translate-x-1">
-                    <div className="absolute left-[8px] top-[26px] w-4 h-4 rounded-full border-2 border-[#e85d04] bg-[#09090b] transition-all duration-200 group-hover:scale-125 group-hover:bg-[#e85d04] z-10 shadow-[0_0_0_4px_#09090b]" />
-                    <div className="bg-[#161616] p-6 px-8 rounded-[16px] border border-[#2a2a2a] border-l-[3px] border-l-[#2a2a2a] group-hover:border-l-[#e85d04] transition-all duration-200">
-                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
+                    {/* Glowing Amber Dot */}
+                    <div className="absolute left-[8px] top-[26px] w-4 h-4 rounded-full border-2 border-amber-600 bg-[#09090b] transition-all duration-200 group-hover:scale-125 group-hover:bg-amber-600 z-10 shadow-[0_0_0_4px_#09090b] flex items-center justify-center overflow-visible">
+                       <div className="absolute w-2 h-2 bg-amber-500 rounded-full animate-pulse blur-[1.5px] opacity-80" />
+                    </div>
+                    <div className="bg-[#161616] p-6 px-8 rounded-[16px] border border-[#2a2a2a] border-l-[3px] border-l-[#2a2a2a] group-hover:border-l-amber-600 transition-all duration-200">
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
                         <div>
-                          <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Certification</span>
-                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">Google Project Management</h3>
-                          <div className="text-[14px] text-[#aaa] font-sans">Professional Certificate</div>
-                        </div>
-                        <div className="text-[11px] font-mono text-[#888] bg-[#111] px-3 py-1.5 rounded-full border border-[#222] whitespace-nowrap self-start">
-                          Google · 2024 → Present
+                          <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Research</span>
+                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">Zero-Shot Marine Debris Detection</h3>
+                          <div className="text-[14px] text-[#aaa] font-sans">SRM Institute · 2024 <span className="text-amber-600 ml-1.5 opacity-90 text-[13px] font-mono">→ In Progress</span></div>
                         </div>
                       </div>
-                      <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mt-4">Covers agile methodologies, stakeholder management, and product lifecycle.</p>
+                      <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mb-6 mt-2">Using SAM2 + Sentinel-2 + Gemini 2.0 Flash for satellite imagery analysis.</p>
+                      
+                      <div className="flex flex-col gap-4">
+                        <div className="flex flex-wrap gap-2">
+                          {researchTech.map((t) => (
+                            <span key={t} className="px-3 py-1 border border-[#e85d04]/40 text-[#e85d04] rounded-full text-[11px] font-mono bg-[#e85d04]/5 transition-all duration-200 group-hover:bg-[#e85d04] group-hover:text-[#09090b] group-hover:font-semibold">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="text-[10.5px] tracking-wide font-mono text-zinc-500 uppercase border-t border-zinc-800/60 pt-4 mt-2">
+                          * IEEE paper under review
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -186,7 +199,7 @@ export default function Experience() {
             {/* EDUCATION SECTION */}
             <div>
               <div className="mb-10">
-                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block pr-12">
+                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block">
                   Education
                 </h2>
               </div>
@@ -230,43 +243,30 @@ export default function Experience() {
               </div>
             </div>
 
-            {/* RESEARCH SECTION */}
+            {/* CERTIFICATIONS SECTION */}
             <div>
               <div className="mb-10">
-                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block pr-12">
-                  Research
+                <h2 className="text-2xl md:text-3xl font-display text-white border-b-2 border-[#e85d04] pb-3 inline-block">
+                  Certifications
                 </h2>
               </div>
               <div className="relative w-full">
                 <div className="absolute left-[15px] top-6 bottom-4 w-[2px] bg-[#e85d04]/20" />
                 <div className="flex flex-col gap-10">
                   <div className="relative pl-12 md:pl-16 group transition-all duration-200 hover:translate-x-1">
-                    {/* Glowing Amber Dot */}
-                    <div className="absolute left-[8px] top-[26px] w-4 h-4 rounded-full border-2 border-amber-600 bg-[#09090b] transition-all duration-200 group-hover:scale-125 group-hover:bg-amber-600 z-10 shadow-[0_0_0_4px_#09090b] flex items-center justify-center overflow-visible">
-                       <div className="absolute w-2 h-2 bg-amber-500 rounded-full animate-pulse blur-[1.5px] opacity-80" />
-                    </div>
-                    <div className="bg-[#161616] p-6 px-8 rounded-[16px] border border-[#2a2a2a] border-l-[3px] border-l-[#2a2a2a] group-hover:border-l-amber-600 transition-all duration-200">
-                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
+                    <div className="absolute left-[8px] top-[26px] w-4 h-4 rounded-full border-2 border-[#e85d04] bg-[#09090b] transition-all duration-200 group-hover:scale-125 group-hover:bg-[#e85d04] z-10 shadow-[0_0_0_4px_#09090b]" />
+                    <div className="bg-[#161616] p-6 px-8 rounded-[16px] border border-[#2a2a2a] border-l-[3px] border-l-[#2a2a2a] group-hover:border-l-[#e85d04] transition-all duration-200">
+                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-3">
                         <div>
-                          <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Research</span>
-                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">Zero-Shot Marine Debris Detection</h3>
-                          <div className="text-[14px] text-[#aaa] font-sans">SRM Institute · 2024 <span className="text-amber-600 ml-1.5 opacity-90 text-[13px] font-mono">→ In Progress</span></div>
+                          <span className="text-[11px] font-mono tracking-widest text-[#e85d04] uppercase font-bold mb-1.5 block">Certification</span>
+                          <h3 className="text-[20px] font-mono font-bold tracking-tight text-white mb-1">Google Project Management</h3>
+                          <div className="text-[14px] text-[#aaa] font-sans">Professional Certificate</div>
+                        </div>
+                        <div className="text-[11px] font-mono text-[#888] bg-[#111] px-3 py-1.5 rounded-full border border-[#222] whitespace-nowrap self-start">
+                          Google · 2024 → Present
                         </div>
                       </div>
-                      <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mb-6 mt-2">Using SAM2 + Sentinel-2 + Gemini 2.0 Flash for satellite imagery analysis.</p>
-                      
-                      <div className="flex flex-col gap-4">
-                        <div className="flex flex-wrap gap-2">
-                          {researchTech.map((t) => (
-                            <span key={t} className="px-3 py-1 border border-[#e85d04]/40 text-[#e85d04] rounded-full text-[11px] font-mono bg-[#e85d04]/5 transition-all duration-200 group-hover:bg-[#e85d04] group-hover:text-[#09090b] group-hover:font-semibold">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="text-[10.5px] tracking-wide font-mono text-zinc-500 uppercase border-t border-zinc-800/60 pt-4 mt-2">
-                          * IEEE paper under review
-                        </div>
-                      </div>
+                      <p className="text-[#ccc] font-sans text-[14px] leading-relaxed mt-4">Covers agile methodologies, stakeholder management, and product lifecycle.</p>
                     </div>
                   </div>
                 </div>
