@@ -8,6 +8,7 @@ const projects = [
     description: "SaaS data testing and quality analytics platform with full auth, dashboards, and CSV pipelines. Built for real-world data validation.",
     tags: ["React", "Supabase", "TypeScript", "Recharts", "Tailwind CSS"],
     link: "https://spinwisely.com/landing",
+    image: "/spin-q.png",
   },
   {
     name: "F1 Bunny",
@@ -15,6 +16,7 @@ const projects = [
     description: "Intelligent RAG-based Formula 1 assistant. Cross-platform — desktop via Tauri, Android via Capacitor. Powered by Lyzr AI and SerpAPI.",
     tags: ["TypeScript", "Supabase", "Lyzr AI", "Tauri", "Capacitor"],
     link: "https://github.com/akshath-31/f1-bunny",
+    image: "/f1Bunny.png",
   },
   {
     name: "TRAP",
@@ -23,6 +25,7 @@ const projects = [
     tags: ["Fintech", "Hackathon", "React"],
     badge: "🏆 3RD — NIT TRICHY",
     link: "https://github.com/akshath-31/Transacation-Risk-Assessment-Prevention",
+    image: "/trap.png",
   },
   {
     name: "Tanfinet",
@@ -30,6 +33,7 @@ const projects = [
     description: "ML fault detection on BSNL Fibernet using Temporal Fusion Transformer. AI confidence scoring and real-time alert pipeline. Improved accuracy from ~50% to ~70%.",
     tags: ["Python", "PyTorch", "FastAPI", "React", "TypeScript"],
     link: "https://github.com/akshath-31/Tanfinet-Fault-Detection",
+    image: "/Tanfinet.jpg",
   },
   {
     name: "J.A.R.V.I.S",
@@ -38,6 +42,7 @@ const projects = [
     tags: ["React", "Python", "AI"],
     badge: "IN PROGRESS",
     link: "https://github.com/akshath-31/jarvis",
+    image: "/Jarvis.png",
   },
   {
     name: "Ocean Pollution Detector",
@@ -46,6 +51,7 @@ const projects = [
     tags: ["Python", "TensorFlow", "Deep Learning", "Computer Vision"],
     badge: "IN PROGRESS",
     link: null,
+    image: "/ocean-plastic-pollution.png",
   },
   {
     name: "RCB Marketing Analysis",
@@ -54,6 +60,7 @@ const projects = [
     tags: ["Python", "Pandas", "Matplotlib", "Data Analysis"],
     badge: "IN PROGRESS",
     link: null,
+    image: "/RCB.png",
   },
   {
     name: "Skill Swap",
@@ -62,6 +69,7 @@ const projects = [
     tags: ["React", "Node.js", "TypeScript", "PostgreSQL"],
     badge: "IN PROGRESS",
     link: "https://github.com/akshath-31/skill-swap-fsd",
+    image: "/Skill-swap.png",
   }
 ];
 
@@ -89,11 +97,23 @@ export default function Projects() {
               key={i} 
               className="bg-[#161616] rounded-[16px] border-[0.5px] border-[#2a2a2a] overflow-hidden hover:border-[#444] transition-colors flex flex-col group"
             >
-              {/* Image Placeholder */}
-              <div className="w-full h-[220px] md:h-[260px] bg-[#1a1a1a] relative flex items-center justify-center border-b border-[#2a2a2a]">
-                <span className="text-[#333] font-mono text-sm tracking-widest uppercase">Image Coming Soon</span>
+              {/* Image Container */}
+              <div className="w-full aspect-[16/9] bg-[#1a1a1a] relative flex items-center justify-center border-b border-[#2a2a2a] overflow-hidden">
+                {project.image ? (
+                  <img 
+                    src={project.image} 
+                    alt={project.name} 
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" 
+                  />
+                ) : (
+                  <span className="text-[#333] font-mono text-sm tracking-widest uppercase">Image Coming Soon</span>
+                )}
+                
+                {/* Gradient overlay for better badge & image blending */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                
                 {project.badge && (
-                  <div className="absolute top-4 right-4 z-10 text-[#e85d04] text-[10px] sm:text-[11px] font-mono tracking-wider font-bold bg-[#e85d04]/10 px-3 py-1 rounded-full border border-[#e85d04]/20">
+                  <div className="absolute top-4 right-4 z-10 text-[#e85d04] text-[10px] sm:text-[11px] font-mono tracking-wider font-bold bg-[#e85d04]/10 backdrop-blur-sm px-3 py-1 rounded-full border border-[#e85d04]/20 shadow-md">
                     {project.badge}
                   </div>
                 )}
