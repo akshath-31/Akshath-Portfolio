@@ -17,18 +17,19 @@ export default function Experience() {
         <div className="absolute top-0 left-0 w-full h-full opacity-10" style={{ backgroundImage: 'radial-gradient(#ea580c 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
       </div>
 
-      <main className="pt-32 pb-24 px-8 md:px-16 max-w-5xl mx-auto flex flex-col min-h-screen relative z-10 w-full">
+      <main className="pt-32 pb-24 px-8 md:px-16 max-w-5xl mx-auto flex flex-col relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
-          <div className="flex flex-col gap-4 items-start mb-20">
-            <h2 className="text-[10px] tracking-[0.3em] font-mono text-[#e85d04] uppercase font-medium">
+          {/* HEADER */}
+          <div className="mb-16 flex flex-col gap-4 items-start">
+            <h2 className="text-orange-500 font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase font-medium">
               04 // Timeline
             </h2>
-            <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight text-[#e85d04]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight text-orange-500">
               Experience
             </h1>
             <div className="w-24 h-px bg-zinc-800 mt-2" />

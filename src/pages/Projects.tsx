@@ -62,10 +62,10 @@ export default function Projects() {
     <div className="min-h-screen w-full bg-[#0a0a0a] text-white font-sans selection:bg-white selection:text-black">
       <TopNav />
 
-      <div className="pt-32 pb-24 px-8 md:px-16 max-w-[1400px] mx-auto">
+      <main className="pt-32 pb-24 px-8 md:px-16 max-w-[1400px] mx-auto w-full flex flex-col relative z-10">
         {/* Header section */}
         <div className="mb-16 flex flex-col gap-4 items-start">
-          <h2 className="text-[#e85d04] font-mono text-[11px] tracking-[3px] uppercase">
+          <h2 className="text-orange-500 font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase font-medium">
             03 // PORTFOLIO
           </h2>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight text-orange-500">
@@ -115,7 +115,7 @@ export default function Projects() {
             </div>
           ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 }

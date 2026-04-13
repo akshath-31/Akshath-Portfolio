@@ -7,18 +7,19 @@ export default function Contact() {
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-white selection:text-black">
       <TopNav />
       
-      <main className="pt-32 pb-16 px-8 md:px-16 max-w-7xl mx-auto flex flex-col justify-center min-h-screen">
+      <main className="pt-32 pb-24 px-8 md:px-16 max-w-7xl mx-auto flex flex-col relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-12"
         >
-          <div className="flex flex-col gap-4 items-start">
-            <h2 className="text-[10px] tracking-[0.3em] font-mono text-orange-500 uppercase font-medium">
+          {/* HEADER */}
+          <div className="mb-16 flex flex-col gap-4 items-start">
+            <h2 className="text-orange-500 font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase font-medium">
               05 // Connect
             </h2>
-            <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight text-orange-500">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight text-orange-500">
               Let's Connect
             </h1>
             <div className="w-24 h-px bg-zinc-800 mt-2" />
