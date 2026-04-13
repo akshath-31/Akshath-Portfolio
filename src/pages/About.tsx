@@ -27,10 +27,7 @@ export default function About() {
           <section className="grid grid-cols-1 md:grid-cols-[11fr_9fr] gap-12 items-center">
             <div className="order-2 md:order-1 text-zinc-400 text-sm md:text-base leading-relaxed font-light">
               <p>
-                I'm Aks — a pre-final year CS student at SRM Chennai, 
-                building AI-powered full stack products at Arctictern. 
-                I turn complex problems into clean, scalable systems. 
-                Hackathons are my playground, shipping is my habit.
+                I’m Akshath, a pre-final year Computer Science student at SRM Chennai with a strong interest in building impactful technology solutions. I focus on full-stack development and AI-driven applications, working on projects that solve real-world problems in a practical and scalable way. I enjoy tackling complex challenges and turning them into clean, efficient systems, with an emphasis on clarity, performance, and usability. Hackathons have played a key role in shaping my mindset, helping me think quickly, adapt, collaborate effectively, and turn ideas into working products under pressure. Beyond tech, I’m a sports enthusiast with a strong passion for cricket and football, and I’ve competed in cricket at a professional level representing TNCA 3rd Division, which has built my discipline, resilience, and ability to perform consistently in high-pressure situations. I’m also developing an interest in finance, where I enjoy understanding market trends and how strategic decisions create long-term value. Overall, I’m someone who is constantly looking to learn, build, and improve—both as a developer and as an individual.
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
