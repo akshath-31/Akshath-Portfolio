@@ -7,53 +7,61 @@ const projects = [
     status: "Done",
     description: "SaaS data testing and quality analytics platform with full auth, dashboards, and CSV pipelines. Built for real-world data validation.",
     tags: ["React", "Supabase", "TypeScript", "Recharts", "Tailwind CSS"],
+    link: "https://spinwisely.com/landing",
   },
   {
     name: "F1 Bunny",
     status: "Done",
     description: "Intelligent RAG-based Formula 1 assistant. Cross-platform — desktop via Tauri, Android via Capacitor. Powered by Lyzr AI and SerpAPI.",
     tags: ["TypeScript", "Supabase", "Lyzr AI", "Tauri", "Capacitor"],
+    link: "https://github.com/akshath-31/f1-bunny",
   },
   {
     name: "TRAP",
     status: "Done",
     description: "Fintech solution built at NIT Trichy's national hackathon targeting financial inclusion and social impact. Secured 3rd place.",
     tags: ["Fintech", "Hackathon", "React"],
-    badge: "🏆 3RD — NIT TRICHY"
+    badge: "🏆 3RD — NIT TRICHY",
+    link: "https://github.com/akshath-31/Transacation-Risk-Assessment-Prevention",
   },
   {
     name: "Tanfinet",
     status: "Done",
     description: "ML fault detection on BSNL Fibernet using Temporal Fusion Transformer. AI confidence scoring and real-time alert pipeline. Improved accuracy from ~50% to ~70%.",
     tags: ["Python", "PyTorch", "FastAPI", "React", "TypeScript"],
+    link: "https://github.com/akshath-31/Tanfinet-Fault-Detection",
   },
   {
     name: "J.A.R.V.I.S",
     status: "In Progress",
     description: "Just a rather very intelligent system. An AI-powered personal assistant currently in active development. You know right 😉",
     tags: ["React", "Python", "AI"],
-    badge: "IN PROGRESS"
+    badge: "IN PROGRESS",
+    link: "https://github.com/akshath-31/jarvis",
   },
   {
     name: "Ocean Pollution Detector",
     status: "In Progress",
     description: "Deep learning model detecting plastic pollution in ocean imagery. Computer vision pipeline trained to classify marine debris at scale.",
     tags: ["Python", "TensorFlow", "Deep Learning", "Computer Vision"],
-    badge: "IN PROGRESS"
+    badge: "IN PROGRESS",
+    link: null,
   },
   {
     name: "RCB Marketing Analysis",
     status: "In Progress",
     description: "Data-driven marketing analysis for Royal Challengers Bangalore. Fan engagement patterns, campaign performance and brand insights from IPL data.",
     tags: ["Python", "Pandas", "Matplotlib", "Data Analysis"],
-    badge: "IN PROGRESS"
+    badge: "IN PROGRESS",
+    link: null,
   },
   {
     name: "Skill Swap",
     status: "In Progress",
     description: "Peer-to-peer barter platform for learning and teaching skills. Trade what you know for what you want to learn — no money, just knowledge.",
     tags: ["React", "Node.js", "TypeScript", "PostgreSQL"],
-    badge: "IN PROGRESS"
+    badge: "IN PROGRESS",
+    link: "https://github.com/akshath-31/skill-swap-fsd",
   }
 ];
 
@@ -108,9 +116,15 @@ export default function Projects() {
                     ))}
                   </div>
                 </div>
-                <a href="#" className="self-start inline-flex items-center gap-2 bg-[#e85d04] text-[#0a0a0a] px-6 py-3 rounded-[8px] font-mono text-[13px] font-bold uppercase tracking-wider hover:bg-[#ff7a1a] hover:scale-[1.03] transition-all duration-300">
-                  View Project <span className="text-xl leading-none">→</span>
-                </a>
+                {project.link ? (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="self-start inline-flex items-center gap-2 bg-[#e85d04] text-[#0a0a0a] px-6 py-3 rounded-[8px] font-mono text-[13px] font-bold uppercase tracking-wider hover:bg-[#ff7a1a] hover:scale-[1.03] transition-all duration-300">
+                    View Project <span className="text-xl leading-none">→</span>
+                  </a>
+                ) : (
+                  <button disabled className="self-start inline-flex items-center gap-2 bg-[#1a1a1a] text-[#888] px-6 py-3 rounded-[8px] font-mono text-[13px] font-bold uppercase tracking-wider cursor-not-allowed border border-[#2a2a2a]">
+                    Cooking...
+                  </button>
+                )}
               </div>
             </div>
           ))}

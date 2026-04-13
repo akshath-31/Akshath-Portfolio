@@ -49,10 +49,10 @@ export default function About() {
           <section className="border-b border-orange-500/20 pb-12">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {[
-                { value: "3+", label: "Years Coding" },
-                { value: "5+", label: "Projects Shipped" },
-                { value: "2", label: "Hackathons Built" },
-                { value: "1", label: "Research Paper" }
+                { value: "3", label: "Years Coding" },
+                { value: "5+", label: "Products Shipped" },
+                { value: "5+", label: "Hackathons Built" },
+                { value: "2", label: "Research Papers" }
               ].map((stat, i) => (
                 <div 
                   key={i}
@@ -74,7 +74,7 @@ export default function About() {
                   FULL STACK DEV
                 </h3>
                 <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-                  I build complete products from zero to deployed — clean architecture, fast interfaces, and real-world scalability.
+                  I build end-to-end products from idea to deployment with clean architecture, fast interfaces, and reliable performance.
                 </p>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function About() {
                   DATA SCIENCE & ML
                 </h3>
                 <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-                  I turn raw data into intelligent systems — from model training to production-ready AI integrations that actually work.
+                  I turn raw data into intelligent systems, building models and integrating them into real-world applications that actually work.
                 </p>
               </div>
             </div>
@@ -98,18 +98,11 @@ export default function About() {
               BEYOND THE CODE
             </h3>
             <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-              Beyond the screen, I'm a sports enthusiast who has competed in cricket at the TNCA 3rd 
-              Division level — where I learned to perform under pressure, stay consistent, and lead 
-              within a team. Football runs equally deep in my passion. That same competitive 
-              discipline drives how I approach every build, every deadline, every problem. I also have 
-              a growing curiosity in finance — understanding market dynamics and how strategic decisions 
-              compound into long-term value.
+              Beyond the screen, I’m a sports enthusiast who has competed in cricket at the TNCA 3rd Division level, where I learned to perform under pressure, stay consistent, and contribute effectively within a team. Football runs equally deep in my interests, and I closely follow clubs like Real Madrid, while in cricket I’m a strong supporter of RCB. That same competitive discipline shapes how I approach every build, deadline, and challenge. I also have a growing curiosity in finance, exploring market dynamics and how strategic decisions compound into long term value.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               {[
-                "🏏 TNCA Cricket — 3rd Division",
-                "⚽ Football",
-                "📈 Finance & Markets"
+                "🏏 TNCA Cricket — 3rd Division"
               ].map((tag) => (
                 <span 
                   key={tag}
@@ -124,13 +117,15 @@ export default function About() {
           {/* SECTION 05 — RESUME CTA */}
           <section className="text-center pt-8 pb-4">
             <a 
-              href="#"
+              href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block bg-orange-500 text-zinc-950 font-bold font-mono uppercase tracking-widest px-8 md:px-10 py-4 md:py-5 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.03] hover:brightness-110 mb-4"
             >
-              Download Resume
+              View Resume
             </a>
             <div className="text-zinc-600 text-[10px] md:text-xs font-mono tracking-widest">
-              Last updated · 2025
+              Last updated · 2026
             </div>
           </section>
 
