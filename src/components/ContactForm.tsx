@@ -1,5 +1,5 @@
 import { Mail, Github, Linkedin, Instagram, Send, CheckCircle2, XCircle } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import emailjs from '@emailjs/browser';
 
 export default function ContactForm() {

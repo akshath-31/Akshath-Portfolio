@@ -98,55 +98,53 @@ export default function App() {
           <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ea580c 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
         </div>
 
-
-        {/* Main Flex Page Layout */}
-        <div className="page-layout" style={{ display: 'flex', flexDirection: 'row', width: '100vw', height: '100vh', zIndex: 10, position: 'relative' }}>
-          
-          {/* Left Sidebar */}
-          <div className="left-sidebar hidden lg:flex" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', paddingLeft: '3%', width: '22%', height: '100%', flexShrink: 0 }}>
-            <AnimatePresence>
-              {showMenu && (
-                <motion.nav
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col"
-                  style={{ gap: 'clamp(1rem, 2.5vh, 2.5rem)', zIndex: 20 }}
-                >
-                  {["About", "Skills", "Projects", "Experience", "Contact"].map((item, i) => (
-                    <motion.div
-                      key={item}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8 + i * 0.1, duration: 0.8 }}
-                      className="group relative cursor-pointer"
-                      onClick={() => navigate(`/${item.toLowerCase()}`)}
-                    >
-                      <span className="font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative" style={{ fontSize: 'clamp(0.8rem, 1.8vw, 2rem)', letterSpacing: '0.15em' }}>
-                        {item}
-                      </span>
-                      {/* Glowing Orange Line on Hover */}
-                      <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-orange-500 group-hover:w-4 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
-                      {/* Subtle Text Reflection Glow */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 blur-xl bg-orange-500/20 transition-opacity duration-700 pointer-events-none" />
-                    </motion.div>
-                  ))}
-                </motion.nav>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Hero Wrapper Sibling */}
-          <div className="hero-wrapper" style={{ containerType: 'inline-size', position: 'relative', flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div
-              className={`relative w-full h-full lg:max-w-[calc((100vh-30px)*16/9)] lg:aspect-video lg:h-auto lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden flex flex-col ${
-                isDesktop && shiftPortal ? "lg:backdrop-blur-md" : "lg:backdrop-blur-xl"
-              }`}
+        {/* Left-Side Navigation Menu (Desktop Only) */}
+        <AnimatePresence>
+          {showMenu && (
+            <motion.nav
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden lg:flex absolute left-12 top-0 bottom-0 flex-col justify-center gap-12 z-20"
             >
-              {/* Black Background Base */}
-              <div className="absolute inset-0 bg-black z-[-20] lg:bg-transparent" />
-              
-              <div style={{ position: 'relative', width: '100%', height: '100%', display: 'block' }}>
+              {["About", "Skills", "Projects", "Experience", "Contact"].map((item, i) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + i * 0.1, duration: 0.8 }}
+                  className="group relative cursor-pointer"
+                  onClick={() => navigate(`/${item.toLowerCase()}`)}
+                >
+                  <span className="text-4xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative">
+                    {item}
+                  </span>
+                  {/* Glowing Orange Line on Hover */}
+                  <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-orange-500 group-hover:w-4 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
+                  {/* Subtle Text Reflection Glow */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 blur-xl bg-orange-500/20 transition-opacity duration-700 pointer-events-none" />
+                </motion.div>
+              ))}
+            </motion.nav>
+          )}
+        </AnimatePresence>
+
+        {/* Portal Container (Glassy Box on Desktop) */}
+        <motion.div
+          animate={{ x: isDesktop && shiftPortal ? 170 : 0 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          style={{ willChange: "transform" }}
+          className="relative w-full min-h-screen lg:absolute lg:inset-0 lg:m-auto lg:w-full lg:max-w-[min(calc(100vw-22rem),calc((100vh-30px)*16/9))] lg:aspect-video lg:h-auto lg:min-h-0 z-10 transform-gpu"
+        >
+        <div
+          className={`relative w-full min-h-screen lg:h-full lg:min-h-0 lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden flex flex-col ${
+            isDesktop && shiftPortal ? "lg:backdrop-blur-md" : "lg:backdrop-blur-xl"
+          }`}
+        >
+          {/* Black Background Base */}
+          <div className="absolute inset-0 bg-black z-[-20] lg:bg-transparent" />
+          
+      <div className="hero-wrapper" style={{ containerType: 'inline-size', position: 'relative', width: '100%', aspectRatio: '16 / 9', overflow: 'hidden', display: 'block' }}>
         {/* Canvas / Video Array */}
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'block' }}>
           <video
@@ -179,7 +177,7 @@ export default function App() {
         {/* hero-overlay */}
         <div className="hero-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden' }}>
           
-          {/* Top-left zone */}
+          {/* Top-left zone / Left Sidebar */}
           <div style={{ position: 'absolute', top: '5%', left: '4%', width: '32%', height: '91%', pointerEvents: 'auto', display: 'flex', flexDirection: 'column' }}>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -355,10 +353,16 @@ export default function App() {
           </div>
 
         </div>
-        </div>
       </div>
-    </div>
-    </div>
+
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 pointer-events-none z-0 lg:hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_70%)]" />
+        <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
+      </div>
+
+        </div>
+        </motion.div> {/* End Portal Container */}
     </div>
     </div>
   );
