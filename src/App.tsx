@@ -325,7 +325,7 @@ export default function App() {
                       </span>
                       <span
                         className="font-mono font-medium text-right"
-                        style={{ fontSize: "0.85cqw", color: "#000000" }}
+                        style={{ fontSize: "0.85cqw", color: "#ffffff" }}
                       >
                         {spec.value}
                       </span>
@@ -505,7 +505,7 @@ export default function App() {
                     ].map((spec, i) => (
                       <div key={i} className="flex justify-between border-b border-zinc-900 pb-2">
                         <span className="text-black">{spec.label}</span>
-                        <span className="text-zinc-200">{spec.value}</span>
+                        <span className="text-white">{spec.value}</span>
                       </div>
                     ))}
                   </div>
