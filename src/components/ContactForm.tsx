@@ -47,7 +47,7 @@ export default function ContactForm() {
       <div className="flex flex-col space-y-4 mt-1">
         <div className="space-y-3">
           {/* Action Cards */}
-          <a href="mailto:your.email@example.com" className="flex items-center gap-4 bg-[#151517] hover:bg-[#1a1a1c] border border-zinc-800/50 hover:border-orange-500/30 p-3 lg:p-3.5 rounded-xl transition-all group">
+          <a href="mailto:akshath.creates@gmail.com" className="flex items-center gap-4 bg-[#151517] hover:bg-[#1a1a1c] border border-zinc-800/50 hover:border-orange-500/30 p-3 lg:p-3.5 rounded-xl transition-all group">
             <div className="w-9 h-9 bg-[#1f1f22] group-hover:bg-orange-500/10 rounded-lg flex items-center justify-center transition-colors">
               <Mail className="w-4 h-4 text-zinc-400 group-hover:text-orange-500" />
             </div>
