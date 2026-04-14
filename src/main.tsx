@@ -7,11 +7,13 @@ import Skills from './pages/Skills.tsx';
 import Projects from './pages/Projects.tsx';
 import Experience from './pages/Experience.tsx';
 import Contact from './pages/Contact.tsx';
+import ScrollToTop from './components/ScrollToTop.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
