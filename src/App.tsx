@@ -246,7 +246,7 @@ export default function App() {
                         >
                           <Icon size={undefined} className="group-hover:scale-110 transition-transform" style={{ width: "1.4cqw", height: "1.4cqw" }} />
                           <span
-                            className="absolute -top-5 opacity-0 group-hover:opacity-100 transition-opacity font-mono text-zinc-400 whitespace-nowrap"
+                            className="absolute top-full mt-1 opacity-0 group-hover:opacity-100 transition-opacity font-mono text-zinc-400 whitespace-nowrap"
                             style={{ fontSize: "0.7cqw" }}
                           >
                             {label}
@@ -354,14 +354,14 @@ export default function App() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.5cqw" }}>
                   <h3
                     className="font-mono font-semibold uppercase tracking-widest text-zinc-300"
-                    style={{ fontSize: "0.75cqw", letterSpacing: "0.2em" }}
+                    style={{ fontSize: "0.86cqw", letterSpacing: "0.2em" }}
                   >
                     CURRENT PROJECT
                   </h3>
-                  <div className="text-white font-medium" style={{ fontSize: "0.95cqw" }}>
+                  <div className="text-white font-medium" style={{ fontSize: "1.09cqw" }}>
                     J.A.R.V.I.S
                   </div>
-                  <p className="text-zinc-500 font-light leading-relaxed" style={{ fontSize: "0.85cqw" }}>
+                  <p className="text-zinc-400 font-light leading-relaxed" style={{ fontSize: "0.98cqw" }}>
                     "Just a rather very intelligent system. You know right 😉"
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.5cqw", width: "55%" }}>
@@ -371,7 +371,7 @@ export default function App() {
                     >
                       <div className="absolute top-0 left-0 h-full bg-zinc-200" style={{ width: "60%" }} />
                     </div>
-                    <span className="text-zinc-200 font-mono tracking-widest" style={{ fontSize: "0.7cqw" }}>60%</span>
+                    <span className="text-zinc-200 font-mono tracking-widest" style={{ fontSize: "0.8cqw" }}>60%</span>
                   </div>
                   <a
                     href="https://github.com/akshath-31/jarvis"
@@ -382,7 +382,7 @@ export default function App() {
                       width: "fit-content",
                       padding: "0.5cqw 1.4cqw",
                       borderRadius: "9999px",
-                      fontSize: "0.7cqw",
+                      fontSize: "0.8cqw",
                       letterSpacing: "0.2em",
                     }}
                   >
@@ -517,24 +517,25 @@ export default function App() {
                 <div className="lg:hidden w-full space-y-8 mt-12 pb-12">
                   <div className="p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
                     <div className="flex flex-col gap-3">
-                      <h3 className="text-[11px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
+                      <h3 className="font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold" style={{ fontSize: "13px" }}>
                         CURRENT PROJECT
                       </h3>
-                      <div className="text-lg text-white font-medium">J.A.R.V.I.S</div>
-                      <p className="text-zinc-500 text-[16px] leading-relaxed mb-[7px] font-light">
+                      <div className="text-white font-medium" style={{ fontSize: "21px" }}>J.A.R.V.I.S</div>
+                      <p className="text-zinc-400 leading-relaxed mb-[7px] font-light" style={{ fontSize: "18.5px" }}>
                         "Just a rather very intelligent system. You know right 😉"
                       </p>
                       <div className="flex flex-col gap-1 mb-[7px]">
                         <div className="w-full h-[2px] bg-zinc-800 relative overflow-hidden">
                           <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
                         </div>
-                        <span className="text-zinc-200 text-[10px] font-mono tracking-widest">60%</span>
+                        <span className="text-zinc-200 font-mono tracking-widest" style={{ fontSize: "11.5px" }}>60%</span>
                       </div>
                       <a
                         href="https://github.com/akshath-31/jarvis"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full py-4 rounded-full border border-zinc-700 text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black active:bg-white active:text-black transition-all flex items-center justify-center"
+                        className="w-full py-4 rounded-full border border-zinc-700 font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black active:bg-white active:text-black transition-all flex items-center justify-center"
+                        style={{ fontSize: "11.5px" }}
                       >
                         COLLABORATE
                       </a>
