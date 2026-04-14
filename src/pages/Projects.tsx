@@ -14,7 +14,7 @@ const projects = [
   {
     name: "F1 Bunny",
     status: "Done",
-    description: "Intelligent RAG-based Formula 1 assistant. Cross-platform — desktop via Tauri, Android via Capacitor. Powered by Lyzr AI and SerpAPI.",
+    description: "Intelligent RAG based Formula 1 assistant. Cross-platform  desktop via Tauri, Android via Capacitor. Powered by Lyzr AI and SerpAPI.",
     tags: ["TypeScript", "Supabase", "Lyzr AI", "Tauri", "Capacitor"],
     link: "https://f1-bunny.vercel.app/",
     githubLink: "https://github.com/akshath-31/f1-bunny",
@@ -67,7 +67,7 @@ const projects = [
   {
     name: "Skill Swap",
     status: "In Progress",
-    description: "Peer-to-peer barter platform for learning and teaching skills. Trade what you know for what you want to learn — no money, just knowledge.",
+    description: "Peer-to-peer barter platform for learning and teaching skills. Trade what you know for what you want to learn no money, just knowledge.",
     tags: ["React", "Node.js", "TypeScript", "PostgreSQL"],
     badge: "IN PROGRESS",
     link: "https://github.com/akshath-31/skill-swap-fsd",
