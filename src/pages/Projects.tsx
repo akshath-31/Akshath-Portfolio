@@ -8,7 +8,7 @@ const projects = [
     description: "SaaS data testing and quality analytics platform with full auth, dashboards, and CSV pipelines. Built for real-world data validation.",
     tags: ["React", "Supabase", "TypeScript", "Recharts", "Tailwind CSS"],
     link: "https://spinwisely.com/landing",
-    image: "/spin-q.png",
+    image: "/spin-q.webp",
   },
   {
     name: "F1 Bunny",
@@ -16,7 +16,7 @@ const projects = [
     description: "Intelligent RAG-based Formula 1 assistant. Cross-platform — desktop via Tauri, Android via Capacitor. Powered by Lyzr AI and SerpAPI.",
     tags: ["TypeScript", "Supabase", "Lyzr AI", "Tauri", "Capacitor"],
     link: "https://github.com/akshath-31/f1-bunny",
-    image: "/f1Bunny.png",
+    image: "/f1Bunny.webp",
   },
   {
     name: "TRAP",
@@ -25,7 +25,7 @@ const projects = [
     tags: ["Fintech", "Hackathon", "React"],
     badge: "🏆 3RD — NIT TRICHY",
     link: "https://github.com/akshath-31/Transacation-Risk-Assessment-Prevention",
-    image: "/trap.png",
+    image: "/trap.webp",
   },
   {
     name: "Tanfinet",
@@ -33,7 +33,7 @@ const projects = [
     description: "ML fault detection on BSNL Fibernet using Temporal Fusion Transformer. AI confidence scoring and real-time alert pipeline. Improved accuracy from ~50% to ~70%.",
     tags: ["Python", "PyTorch", "FastAPI", "React", "TypeScript"],
     link: "https://github.com/akshath-31/Tanfinet-Fault-Detection",
-    image: "/Tanfinet.jpg",
+    image: "/Tanfinet.webp",
   },
   {
     name: "J.A.R.V.I.S",
@@ -42,7 +42,7 @@ const projects = [
     tags: ["React", "Python", "AI"],
     badge: "IN PROGRESS",
     link: "https://github.com/akshath-31/jarvis",
-    image: "/Jarvis.png",
+    image: "/Jarvis.webp",
   },
   {
     name: "Ocean Pollution Detector",
@@ -51,7 +51,7 @@ const projects = [
     tags: ["Python", "TensorFlow", "Deep Learning", "Computer Vision"],
     badge: "IN PROGRESS",
     link: null,
-    image: "/ocean-plastic-pollution.png",
+    image: "/ocean-plastic-pollution.webp",
   },
   {
     name: "RCB Marketing Analysis",
@@ -60,7 +60,7 @@ const projects = [
     tags: ["Python", "Pandas", "Matplotlib", "Data Analysis"],
     badge: "IN PROGRESS",
     link: null,
-    image: "/RCB.png",
+    image: "/RCB.webp",
   },
   {
     name: "Skill Swap",
@@ -69,7 +69,7 @@ const projects = [
     tags: ["React", "Node.js", "TypeScript", "PostgreSQL"],
     badge: "IN PROGRESS",
     link: "https://github.com/akshath-31/skill-swap-fsd",
-    image: "/Skill-swap.png",
+    image: "/Skill-swap.webp",
   }
 ];
 

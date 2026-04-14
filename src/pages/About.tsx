@@ -37,7 +37,7 @@ export default function About() {
                 className="w-full max-w-[420px] aspect-square rounded-[24px] overflow-hidden border border-orange-500/20 shadow-lg shadow-orange-500/10 flex items-center justify-center bg-orange-500/5"
               >
                 <img 
-                  src="/Aks_pic_1.JPG" 
+                  src="/Aks_pic_1.webp" 
                   alt="Akshath Senthilkumar" 
                   className="w-full h-full object-cover object-center"
                 />
