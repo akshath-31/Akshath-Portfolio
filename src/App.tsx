@@ -5,12 +5,14 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Linkedin, Github, Instagram, FileText, ChevronRight } from "lucide-react";
+import { Linkedin, Github, Instagram, FileText } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 
-// LeetCode Icon component string
-const LeetCodeIcon = ({ size = 18, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+// LeetCode Icon component
+// FIX: Removed hardcoded width/height attributes from <svg> so the style prop controls sizing,
+// matching how Lucide icons scale with the cqw-based style passed from the parent.
+const LeetCodeIcon = ({ size = 18, className = "", style = {} }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} style={style} xmlns="http://www.w3.org/2000/svg">
     <path d="M13.483 0a1.374 1.374 0 0 0 -0.961 0.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0 -1.209 2.104 5.35 5.35 0 0 0 -0.125 0.513 5.527 5.527 0 0 0 0.062 2.362 5.83 5.83 0 0 0 0.349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193 0.039 0.038c2.248 2.165 5.852 2.133 8.063 -0.074l2.396 -2.392c0.54 -0.54 0.54 -1.414 0.003 -1.955a1.378 1.378 0 0 0 -1.951 -0.003l-2.396 2.392a3.021 3.021 0 0 1 -4.205 0.038l-0.02 -0.019 -4.276 -4.193c-0.652 -0.64 -0.972 -1.469 -0.948 -2.263a2.68 2.68 0 0 1 0.066 -0.523 2.545 2.545 0 0 1 0.619 -1.164L9.13 8.114c1.058 -1.134 3.204 -1.27 4.43 -0.278l3.501 2.831c0.593 0.48 1.461 0.387 1.94 -0.207a1.384 1.384 0 0 0 -0.207 -1.943l-3.5 -2.831c-0.8 -0.647 -1.766 -1.045 -2.774 -1.202l2.015 -2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0 -1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38 -1.382 1.38 1.38 0 0 0 -1.38 -1.382z" />
   </svg>
 );
@@ -20,7 +22,8 @@ export default function App() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isVideoTransitioning, setIsVideoTransitioning] = useState(false);
-  const [shiftPortal, setShiftPortal] = useState(false);
+  // FIX: Start as true so the portal renders directly in its final right position — no center-to-right animation on load.
+  const [shiftPortal, setShiftPortal] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [siteLoaded, setSiteLoaded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -38,10 +41,8 @@ export default function App() {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     const updateViewport = () => setIsDesktop(mediaQuery.matches);
-
     updateViewport();
     mediaQuery.addEventListener("change", updateViewport);
-
     return () => mediaQuery.removeEventListener("change", updateViewport);
   }, []);
 
@@ -50,32 +51,28 @@ export default function App() {
   const loopVideoRefDesktop = useRef<HTMLVideoElement>(null);
   const loopVideoRefMobile = useRef<HTMLVideoElement>(null);
 
-  // Trigger video playback *only* when the loading screen fully completely disappears
   useEffect(() => {
     if (!isLoading) {
       if (introVideoRefDesktop.current) introVideoRefDesktop.current.play();
       if (introVideoRefMobile.current) introVideoRefMobile.current.play();
+      setShowMenu(true);
     }
   }, [isLoading]);
 
   const handleVideoEnded = () => {
     setIsVideoTransitioning(true);
-
-    if (loopVideoRefDesktop.current) {
-      loopVideoRefDesktop.current.play();
-    }
-    if (loopVideoRefMobile.current) {
-      loopVideoRefMobile.current.play();
-    }
-
-    window.setTimeout(() => {
-      setShiftPortal(true);
-    }, 180);
-
-    window.setTimeout(() => {
-      setShowMenu(true);
-    }, 520);
+    if (loopVideoRefDesktop.current) loopVideoRefDesktop.current.play();
+    if (loopVideoRefMobile.current) loopVideoRefMobile.current.play();
+    // shiftPortal is already true from initial state — no action needed here
   };
+
+  const socialIcons = [
+    { Icon: Linkedin, link: "https://www.linkedin.com/in/akshathsenthilkumar/", label: "LinkedIn" },
+    { Icon: Github, link: "https://github.com/akshath-31", label: "GitHub" },
+    { Icon: Instagram, link: "https://www.instagram.com/akshath.31/", label: "Instagram" },
+    { Icon: LeetCodeIcon, link: "https://leetcode.com/u/akshath-31/", label: "LeetCode" },
+    { Icon: FileText, link: "https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing", label: "Resume" },
+  ];
 
   return (
     <div className="min-h-screen text-white font-sans selection:bg-white selection:text-black overflow-x-hidden overflow-y-auto lg:overflow-hidden">
@@ -85,12 +82,9 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <div 
+      <div
         className="relative min-h-screen text-white font-sans overflow-hidden bg-zinc-950"
-        style={{ 
-          opacity: isLoading ? 0 : 1, 
-          transition: "opacity 0.5s ease-out" 
-        }}
+        style={{ opacity: isLoading ? 0 : 1, transition: "opacity 0.5s ease-out" }}
       >
         {/* Outer Background (Desktop Only) */}
         <div className="hidden lg:block absolute inset-0 z-0 pointer-events-none">
@@ -104,7 +98,7 @@ export default function App() {
             <motion.nav
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ delay: 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="hidden lg:flex absolute left-12 top-0 bottom-0 flex-col justify-center gap-12 z-20"
             >
               {["About", "Skills", "Projects", "Experience", "Contact"].map((item, i) => (
@@ -112,16 +106,14 @@ export default function App() {
                   key={item}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 + i * 0.1, duration: 0.8 }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.8 }}
                   className="group relative cursor-pointer"
                   onClick={() => navigate(`/${item.toLowerCase()}`)}
                 >
                   <span className="text-4xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative">
                     {item}
                   </span>
-                  {/* Glowing Orange Line on Hover */}
                   <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-orange-500 group-hover:w-4 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
-                  {/* Subtle Text Reflection Glow */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 blur-xl bg-orange-500/20 transition-opacity duration-700 pointer-events-none" />
                 </motion.div>
               ))}
@@ -130,9 +122,10 @@ export default function App() {
         </AnimatePresence>
 
         {/* Portal Container (Glassy Box on Desktop) */}
+        {/* FIX: duration: 0 ensures no sliding animation plays — portal just renders at x:170 immediately */}
         <motion.div
           animate={{ x: isDesktop && shiftPortal ? 170 : 0 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0, ease: [0.22, 1, 0.36, 1] }}
           style={{ willChange: "transform" }}
           className="relative w-full min-h-screen lg:absolute lg:inset-0 lg:m-auto lg:w-full lg:max-w-[min(calc(100vw-22rem),calc((100vh-30px)*16/9))] lg:aspect-video lg:h-auto lg:min-h-0 z-10 transform-gpu"
         >
@@ -144,23 +137,136 @@ export default function App() {
           {/* Black Background Base */}
           <div className="absolute inset-0 bg-black z-[-20] lg:bg-transparent" />
           
-      <div className="hero-wrapper" style={{ containerType: 'inline-size', position: 'relative', width: '100%', aspectRatio: '16 / 9', overflow: 'hidden', display: 'block' }}>
-        {/* Canvas / Video Array */}
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'block' }}>
+      {/* Header Navigation */}
+      <header className="absolute top-8 left-8 right-8 md:top-16 md:left-16 md:right-16 flex justify-between items-start z-50 bg-black/50 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none pointer-events-none">
+        <div className="flex flex-col gap-1 pointer-events-auto">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-medium tracking-[-0.02em] leading-[1.1] uppercase cursor-default"
+          >
+            <span className="text-xl md:text-[1.8rem] font-bold text-white block mb-2">AKSHATH SENTHILKUMAR</span>
+            <div className="flex flex-col text-lg md:text-[1.3rem] font-mono text-white font-medium">
+              <span>&lt;Full Stack Dev/&gt;</span>
+              <span>&lt;DS &amp; ML Engineer/&gt;</span>
+            </div>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-[240px] md:max-w-xs text-[13px] md:text-[14px] text-zinc-400 mt-2 leading-relaxed font-light"
+          >
+            Turning raw data into decisions and ideas into deployed products. Full-stack by craft, data-driven by instinct.
+          </motion.p>
+          
+          <div className="flex flex-col gap-3 mt-4 md:mt-6">
+            <div className="flex gap-2 md:gap-3">
+              {[
+                { Icon: Linkedin, link: "https://www.linkedin.com/in/akshathsenthilkumar/", label: "LinkedIn" },
+                { Icon: Github, link: "https://github.com/akshath-31", label: "GitHub" },
+                { Icon: Instagram, link: "https://www.instagram.com/akshath.31/", label: "Instagram" }
+              ].map(({ Icon, link, label }, i) => (
+                <motion.a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="w-10 h-10 md:w-[2.3rem] md:h-[2.3rem] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
+                >
+                  <Icon size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="absolute -top-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
+                </motion.a>
+              ))}
+            </div>
+            <div className="flex gap-2 md:gap-3">
+              {[
+                { Icon: LeetCodeIcon, link: "https://leetcode.com/u/akshath-31/", label: "LeetCode" },
+                { Icon: FileText, link: "https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing", label: "Resume" }
+              ].map(({ Icon, link, label }, i) => (
+                <motion.a
+                  key={i}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + i * 0.1 }}
+                  className="w-10 h-10 md:w-[2.3rem] md:h-[2.3rem] rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
+                >
+                  <Icon size={18} className="group-hover:scale-110 transition-transform" />
+                  <span className="absolute -bottom-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-4 text-[9px] tracking-[0.3em] font-mono uppercase pointer-events-auto">
+          <div className="relative">
+            <div className="w-24 h-[2px] bg-zinc-800 relative overflow-hidden">
+              <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[35%]" />
+            </div>
+            <span className="absolute -bottom-6 left-0 text-zinc-200 text-[10px]">35%</span>
+          </div>
+          <span className="text-zinc-200 hover:text-white cursor-pointer transition-colors">NEXT PRODUCT →  Skill Swap</span>
+        </div>
+      </header>
+
+      {/* Background Video (Desktop) */}
+      <div className="hidden lg:block absolute inset-0 overflow-hidden pointer-events-none z-[-10]">
+        {/* Intro Video */}
+        <video
+          ref={introVideoRefDesktop}
+          muted
+          PlaysInline
+          onEnded={handleVideoEnded}
+          className={`absolute inset-0 w-full h-full object-cover opacity-80 transition-opacity duration-1000 ${
+            isVideoTransitioning ? "opacity-0" : "opacity-80"
+          }`}
+        >
+          <source src="/Aks_Tilt.webm" type="video/webm" />
+        </video>
+        
+        {/* Loop Video */}
+        <video
+          ref={loopVideoRefDesktop}
+          loop
+          muted
+          PlaysInline
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            isVideoTransitioning ? "opacity-80" : "opacity-0"
+          }`}
+        >
+          <source src="/Aks_Blink_Loop.webm" type="video/webm" />
+        </video>
+        {/* Overlays to ensure text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-40" />
+      </div>
+
+      {/* Main Content Area */}
+      <main className="relative flex-grow flex flex-col lg:flex-row items-center justify-center z-10 lg:p-0 min-h-screen lg:min-h-0">
+        {/* Mobile Video Header */}
+        <div className="lg:hidden w-full h-[50vh] relative overflow-hidden mb-12 bg-black">
+          {/* Intro Video Mobile */}
           <video
-            ref={introVideoRefDesktop}
+            ref={introVideoRefMobile}
             muted
             playsInline
             onEnded={handleVideoEnded}
-            className={`absolute inset-0 w-full h-full object-cover opacity-80 transition-opacity duration-1000 ${
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
               isVideoTransitioning ? "opacity-0" : "opacity-80"
             }`}
           >
             <source src="/Aks_Tilt.webm" type="video/webm" />
           </video>
-          
+
+          {/* Loop Video Mobile */}
           <video
-            ref={loopVideoRefDesktop}
+            ref={loopVideoRefMobile}
             loop
             muted
             playsInline
@@ -170,189 +276,175 @@ export default function App() {
           >
             <source src="/Aks_Blink_Loop.webm" type="video/webm" />
           </video>
-          {/* Overlays to ensure text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-40" />
+          {/* Top Gradient */}
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black to-transparent opacity-80" />
+          {/* Bottom Gradient for smooth transition to content */}
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black via-black/80 to-transparent" />
         </div>
 
-        {/* hero-overlay */}
-        <div className="hero-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden' }}>
-          
-          {/* Top-left zone / Left Sidebar */}
-          <div style={{ position: 'absolute', top: '5%', left: '4%', width: '32%', height: '91%', pointerEvents: 'auto', display: 'flex', flexDirection: 'column' }}>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="font-medium tracking-[-0.02em] leading-[1.1] uppercase cursor-default"
-            >
-              <span className="font-bold text-white block" style={{ fontSize: '3.2cqw', marginBottom: '0.5cqw' }}>AKSHATH SENTHILKUMAR</span>
-              <div className="flex flex-col font-mono text-white font-medium" style={{ fontSize: '2cqw' }}>
-                <span>&lt;FULL STACK DEV/&gt;</span>
-                <span>&lt;DS &amp; ML ENGINEER/&gt;</span>
-              </div>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-zinc-400 leading-relaxed font-light"
-              style={{ fontSize: '1.1cqw', marginTop: '0.5cqw' }}
-            >
-              Turning raw data into decisions and ideas into deployed products. Full-stack by craft, data-driven by instinct.
-            </motion.p>
-            
-            <div className="flex flex-col" style={{ gap: '0.5cqw', marginTop: '1.2cqw' }}>
-              <div className="flex" style={{ gap: '0.5cqw' }}>
-                {[
-                  { Icon: Linkedin, link: "https://www.linkedin.com/in/akshathsenthilkumar/", label: "LinkedIn" },
-                  { Icon: Github, link: "https://github.com/akshath-31", label: "GitHub" },
-                  { Icon: Instagram, link: "https://www.instagram.com/akshath.31/", label: "Instagram" }
-                ].map(({ Icon, link, label }, i) => (
-                  <motion.a
-                    key={i}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    className="rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
-                    style={{ width: '2.2cqw', height: '2.2cqw' }}
-                  >
-                    <Icon style={{ width: '50%', height: '50%' }} className="group-hover:scale-110 transition-transform" />
-                    <span className="absolute -top-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
-                  </motion.a>
-                ))}
-              </div>
-              <div className="flex" style={{ gap: '0.5cqw' }}>
-                {[
-                  { Icon: LeetCodeIcon, link: "https://leetcode.com/u/akshath-31/", label: "LeetCode" },
-                  { Icon: FileText, link: "https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing", label: "Resume" }
-                ].map(({ Icon, link, label }, i) => (
-                  <motion.a
-                    key={i}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6 + i * 0.1 }}
-                    className="rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
-                    style={{ width: '2.2cqw', height: '2.2cqw' }}
-                  >
-                    <Icon style={{ width: '50%', height: '50%' }} className="group-hover:scale-110 transition-transform" />
-                    <span className="absolute -bottom-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="bg-zinc-900/40 border border-zinc-800/50 flex flex-col"
-              style={{ marginTop: 'auto', width: 'calc((22 / 32) * 100%)', padding: '1.2cqw', borderRadius: '1.2cqw' }}
-            >
-              <h3 className="font-mono text-zinc-300 uppercase font-semibold" style={{ fontSize: '0.85cqw', letterSpacing: '0.2em' }}>
-                CURRENT PROJECT
-              </h3>
-              <div className="text-white font-medium" style={{ fontSize: '1.1cqw', marginTop: '0.5cqw' }}>J.A.R.V.I.S</div>
-              <p className="text-zinc-500 font-light" style={{ fontSize: '0.9cqw', marginTop: '0.5cqw', marginBottom: '0.5cqw' }}>
-                "Just a rather very intelligent system. You know right 😉"
-              </p>
-              <div className="flex flex-col" style={{ gap: '0.5cqw', marginBottom: '0.5cqw' }}>
-                <div className="w-full bg-zinc-800 relative overflow-hidden" style={{ height: '0.25cqw' }}>
-                  <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
-                </div>
-                <span className="text-zinc-200 font-mono tracking-widest" style={{ fontSize: '0.85cqw' }}>60%</span>
-              </div>
-              <a href="https://github.com/akshath-31/jarvis" target="_blank" rel="noopener noreferrer" className="border border-zinc-700 font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 active:scale-95 flex items-center justify-center w-max" style={{ fontSize: '0.85cqw', padding: '0.6cqw 1.2cqw', borderRadius: '0.5cqw' }}>
-                COLLABORATE
-              </a>
-            </motion.div>
-          </div>
-
-          {/* Top-right zone */}
-          <div style={{ position: 'absolute', top: '4%', right: '3%', textAlign: 'right', pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: '0.5cqw' }}>
-            <div className="relative flex flex-col items-end" style={{ width: 'max-content' }}>
-              <div className="bg-zinc-800 relative overflow-hidden" style={{ width: '8cqw', height: '0.25cqw' }}>
-                <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[35%]" />
-              </div>
-              <span className="text-zinc-200 absolute right-0" style={{ fontSize: '0.9cqw', top: '100%', marginTop: '0.5cqw' }}>35%</span>
-            </div>
-            <span className="text-zinc-200 hover:text-white cursor-pointer font-mono tracking-[0.3em] uppercase transition-colors" style={{ fontSize: '0.85cqw' }}>NEXT PRODUCT → SKILL SWAP</span>
-          </div>
-
-          {/* Right panel */}
-          <div style={{ position: 'absolute', top: '18%', right: '3%', width: '28%', pointerEvents: 'auto' }}>
-            <h2 className="font-mono text-black uppercase font-bold" style={{ fontSize: '1cqw', letterSpacing: '0.3em', marginBottom: '1.2cqw' }}>
+        <div className="w-full max-w-md px-6 lg:px-0 flex flex-col items-center">
+          {/* Mobile Technical Specs */}
+          <div className="lg:hidden w-full mb-12 scale-110">
+            <h2 className="text-[11px] tracking-[0.3em] font-mono text-black mb-6 uppercase font-bold">
               CURRENT STATUS
             </h2>
-            <div className="flex flex-col" style={{ gap: '0.5cqw' }}>
+            <div className="space-y-4 font-mono text-[12px]">
               {[
                 { label: "STATUS", value: "Available for Internships" },
                 { label: "FOCUS", value: "Data Analysis & AI Products" },
                 { label: "LOCATION", value: "Chennai, India" },
                 { label: "SPECIALTY", value: "Full-Stack + ML Systems" },
               ].map((spec, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
-                  className="flex justify-between border-b border-zinc-900 group cursor-default"
-                  style={{ paddingBottom: '0.6cqw' }}
-                >
-                  <span className="text-black group-hover:text-zinc-800 transition-colors font-mono" style={{ fontSize: '0.85cqw' }}>{spec.label}</span>
-                  <span className="text-zinc-200 font-medium text-right font-mono" style={{ fontSize: '1cqw' }}>{spec.value}</span>
-                </motion.div>
+                <div key={i} className="flex justify-between border-b border-zinc-900 pb-2">
+                  <span className="text-black">{spec.label}</span>
+                  <span className="text-zinc-200">{spec.value}</span>
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Bottom-center/right */}
-          <div style={{ position: 'absolute', bottom: '4%', right: '3%', pointerEvents: 'auto', display: 'flex', gap: '0.5cqw' }}>
-            <motion.a
-              href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1 }}
-              className="font-mono tracking-[0.2em] border flex items-center justify-center transition-all duration-300 cursor-pointer bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
-              style={{ fontSize: '0.9cqw', padding: '0.6cqw 1.2cqw', borderRadius: '0.5cqw' }}
-            >
-              MY STACK
-            </motion.a>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.1 }}
-            >
+          {/* Hero content placeholder */}
+          <div className="flex-grow" />
+
+          {/* Mobile Card & Tags */}
+          <div className="lg:hidden w-full space-y-8 mt-12 pb-12">
+            <div className="p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
+              <div className="flex flex-col gap-3">
+                <h3 className="text-[11px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
+                  CURRENT PROJECT
+                </h3>
+                <div className="text-lg text-white font-medium">J.A.R.V.I.S</div>
+                <p className="text-zinc-500 text-[16px] leading-relaxed mb-[7px] font-light">
+                  "Just a rather very intelligent system. You know right 😉"
+                </p>
+                <div className="flex flex-col gap-1 mb-[7px]">
+                  <div className="w-full h-[2px] bg-zinc-800 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
+                  </div>
+                  <span className="text-zinc-200 text-[10px] font-mono tracking-widest">60%</span>
+                </div>
+                <a href="https://github.com/akshath-31/jarvis" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-full border border-zinc-700 text-[10px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black active:bg-white active:text-black transition-all flex items-center justify-center">
+                  COLLABORATE
+                </a>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 justify-center">
+              <a
+                href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800"
+              >
+                MY STACK
+              </a>
               <Link
                 to="/projects"
-                className="flex font-mono tracking-[0.2em] border items-center justify-center transition-all duration-300 cursor-pointer bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
-                style={{ fontSize: '0.9cqw', padding: '0.6cqw 1.2cqw', borderRadius: '0.5cqw' }}
+                className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800"
               >
                 PORTFOLIO
               </Link>
-            </motion.div>
-            <motion.div
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={{ opacity: 1, scale: 1 }}
-               transition={{ delay: 1.2 }}
-            >
               <Link
                 to="/contact"
-                className="flex font-mono tracking-[0.2em] border items-center justify-center transition-all duration-300 cursor-pointer bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:bg-zinc-200"
-                style={{ fontSize: '0.9cqw', padding: '0.6cqw 1.2cqw', borderRadius: '0.5cqw' }}
+                className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-white text-black border-white"
               >
                 GET IN TOUCH
               </Link>
-            </motion.div>
+            </div>
           </div>
-
         </div>
+      </main>
+
+      {/* Desktop Technical Specs - Right Side */}
+      <div className="hidden lg:block absolute right-16 top-[45%] -translate-y-1/2 w-64 z-40 scale-110">
+        <h2 className="text-[10px] tracking-[0.3em] font-mono text-black mb-6 uppercase font-bold">
+          CURRENT STATUS
+        </h2>
+        <div className="space-y-4 font-mono text-[11px]">
+          {[
+            { label: "STATUS", value: "Available for Internships" },
+            { label: "FOCUS", value: "Data Analysis & AI Products" },
+            { label: "LOCATION", value: "Chennai, India" },
+            { label: "SPECIALTY", value: "Full-Stack + ML Systems" },
+          ].map((spec, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + i * 0.1 }}
+              className="flex justify-between border-b border-zinc-900 pb-3 group cursor-default"
+            >
+              <span className="text-black group-hover:text-zinc-800 transition-colors">{spec.label}</span>
+              <span className="text-zinc-200 font-medium text-right">{spec.value}</span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Bottom Left Card */}
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+        className="hidden lg:block absolute bottom-[26px] left-16 p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 w-[300px] z-40"
+      >
+        <div className="flex flex-col gap-3">
+          <h3 className="text-[10px] font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold">
+            CURRENT PROJECT
+          </h3>
+          <div className="text-white text-sm font-medium">J.A.R.V.I.S</div>
+          <p className="text-zinc-500 text-[14px] leading-relaxed mb-[7px] font-light">
+            "Just a rather very intelligent system. You know right 😉"
+          </p>
+          <div className="flex flex-col gap-1 mb-[7px] w-[130px]">
+            <div className="w-full h-[2px] bg-zinc-800 relative overflow-hidden">
+              <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
+            </div>
+            <span className="text-zinc-200 text-[10px] font-mono tracking-widest">60%</span>
+          </div>
+          <a href="https://github.com/akshath-31/jarvis" target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-2 rounded-full border border-zinc-700 text-[9px] font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 active:scale-95 flex items-center justify-center">
+            COLLABORATE
+          </a>
+        </div>
+      </motion.div>
+
+      {/* Desktop Bottom Right Tags */}
+      <div className="hidden lg:flex absolute bottom-16 right-16 gap-2 z-40">
+        <motion.a
+          href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1 }}
+          className="px-4 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border flex items-center gap-2 transition-all duration-300 cursor-pointer bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
+        >
+          MY STACK
+        </motion.a>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.1 }}
+        >
+          <Link
+            to="/projects"
+            className="flex px-4 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border items-center gap-2 transition-all duration-300 cursor-pointer bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:border-zinc-600 hover:text-zinc-300"
+          >
+            PORTFOLIO
+          </Link>
+        </motion.div>
+        <motion.div
+           initial={{ opacity: 0, scale: 0.9 }}
+           animate={{ opacity: 1, scale: 1 }}
+           transition={{ delay: 1.2 }}
+        >
+          <Link
+            to="/contact"
+            className="flex px-6 py-2 rounded-full text-[8.5px] font-mono tracking-[0.2em] border items-center transition-all duration-300 cursor-pointer bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          >
+            GET IN TOUCH
+          </Link>
+        </motion.div>
       </div>
 
       {/* Decorative Background Elements */}
@@ -361,9 +453,9 @@ export default function App() {
         <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
       </div>
 
-        </div>
-        </motion.div> {/* End Portal Container */}
-    </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }
