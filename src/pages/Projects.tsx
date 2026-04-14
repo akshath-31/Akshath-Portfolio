@@ -1,5 +1,6 @@
 import React from "react";
 import TopNav from "../components/TopNav";
+import { Github } from "lucide-react";
 
 const projects = [
   {
@@ -15,7 +16,8 @@ const projects = [
     status: "Done",
     description: "Intelligent RAG-based Formula 1 assistant. Cross-platform — desktop via Tauri, Android via Capacitor. Powered by Lyzr AI and SerpAPI.",
     tags: ["TypeScript", "Supabase", "Lyzr AI", "Tauri", "Capacitor"],
-    link: "https://github.com/akshath-31/f1-bunny",
+    link: "https://f1-bunny.vercel.app/",
+    githubLink: "https://github.com/akshath-31/f1-bunny",
     image: "/f1Bunny.webp",
   },
   {
@@ -136,15 +138,29 @@ export default function Projects() {
                     ))}
                   </div>
                 </div>
-                {project.link ? (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="self-start inline-flex items-center gap-2 bg-[#e85d04] text-[#0a0a0a] px-5 py-2.5 rounded-[8px] font-mono text-[11px] md:text-[12px] font-bold uppercase tracking-wider hover:bg-[#ff7a1a] hover:scale-[1.03] transition-all duration-300">
-                    View Project <span className="text-lg leading-none">→</span>
-                  </a>
-                ) : (
-                  <button disabled className="self-start inline-flex items-center gap-2 bg-[#1a1a1a] text-[#888] px-5 py-2.5 rounded-[8px] font-mono text-[11px] md:text-[12px] font-bold uppercase tracking-wider cursor-not-allowed border border-[#2a2a2a]">
-                    Cooking...
-                  </button>
-                )}
+                <div className="flex gap-3">
+                  {project.link ? (
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#e85d04] text-[#0a0a0a] px-5 py-2.5 rounded-[8px] font-mono text-[11px] md:text-[12px] font-bold uppercase tracking-wider hover:bg-[#ff7a1a] hover:scale-[1.03] transition-all duration-300">
+                      {(project.name === "Spin-Q Quality Hub" || project.name === "F1 Bunny") ? "View Product" : "View Project"} <span className="text-lg leading-none">→</span>
+                    </a>
+                  ) : (
+                    <button disabled className="inline-flex items-center gap-2 bg-[#1a1a1a] text-[#888] px-5 py-2.5 rounded-[8px] font-mono text-[11px] md:text-[12px] font-bold uppercase tracking-wider cursor-not-allowed border border-[#2a2a2a]">
+                      Cooking...
+                    </button>
+                  )}
+
+                  {project.githubLink && (
+                    <a 
+                      href={project.githubLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="w-[42px] h-[42px] flex items-center justify-center rounded-full bg-[#e85d04] hover:bg-[#ff7a1a] hover:scale-[1.1] transition-all duration-300 shadow-lg shadow-orange-500/20"
+                      title="View Source on GitHub"
+                    >
+                      <Github className="w-5 h-5 text-[#0a0a0a]" />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           ))}
