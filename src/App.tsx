@@ -179,13 +179,20 @@ export default function App() {
           
           {/* Top-left zone / Left Sidebar */}
           <div style={{ position: 'absolute', top: '5%', left: '4%', width: '32%', height: '91%', pointerEvents: 'auto', display: 'flex', flexDirection: 'column' }}>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="font-medium tracking-[-0.02em] leading-[1.1] uppercase cursor-default"
+              className="tracking-[-0.02em] leading-[1.1] uppercase cursor-default"
             >
-              <span className="font-bold text-white block" style={{ fontSize: '3.2cqw', marginBottom: '0.5cqw' }}>AKSHATH SENTHILKUMAR</span>
-              <div className="flex flex-col font-mono text-white font-medium" style={{ fontSize: '2cqw' }}>
+              {/* Name — single line, font-mono bold */}
+              <span
+                className="font-mono font-bold text-white block whitespace-nowrap"
+                style={{ fontSize: '2.9cqw', marginBottom: '0.5cqw' }}
+              >
+                AKSHATH SENTHILKUMAR
+              </span>
+              {/* Roles — font-mono medium */}
+              <div className="flex flex-col font-mono font-medium text-white" style={{ fontSize: '1.7cqw' }}>
                 <span>&lt;FULL STACK DEV/&gt;</span>
                 <span>&lt;DS &amp; ML ENGINEER/&gt;</span>
               </div>
@@ -200,58 +207,61 @@ export default function App() {
               Turning raw data into decisions and ideas into deployed products. Full-stack by craft, data-driven by instinct.
             </motion.p>
             
-            <div className="flex flex-col" style={{ gap: '0.5cqw', marginTop: '1.2cqw' }}>
-              <div className="flex" style={{ gap: '0.5cqw' }}>
+            {/* Icons — two rows: 3 + 2, fixed circular buttons */}
+            <div className="flex flex-col" style={{ gap: '0.8cqw', marginTop: '1.2cqw' }}>
+              {/* Row 1: LinkedIn, GitHub, Instagram */}
+              <div className="flex" style={{ gap: '0.8cqw' }}>
                 {[
-                  { Icon: Linkedin, link: "https://www.linkedin.com/in/akshathsenthilkumar/", label: "LinkedIn" },
-                  { Icon: Github, link: "https://github.com/akshath-31", label: "GitHub" },
-                  { Icon: Instagram, link: "https://www.instagram.com/akshath.31/", label: "Instagram" }
+                  { Icon: Linkedin,  link: "https://www.linkedin.com/in/akshathsenthilkumar/", label: "LinkedIn"  },
+                  { Icon: Github,    link: "https://github.com/akshath-31",                    label: "GitHub"    },
+                  { Icon: Instagram, link: "https://www.instagram.com/akshath.31/",            label: "Instagram" },
                 ].map(({ Icon, link, label }, i) => (
                   <motion.a
-                    key={i}
+                    key={label}
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    title={label}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3 + i * 0.1 }}
-                    className="rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
-                    style={{ width: '2.2cqw', height: '2.2cqw' }}
+                    className="rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+                    style={{ width: '2.8cqw', height: '2.8cqw', flexShrink: 0 }}
                   >
-                    <Icon style={{ width: '50%', height: '50%' }} className="group-hover:scale-110 transition-transform" />
-                    <span className="absolute -top-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
+                    <Icon size={20} />
                   </motion.a>
                 ))}
               </div>
-              <div className="flex" style={{ gap: '0.5cqw' }}>
+              {/* Row 2: LeetCode, Resume */}
+              <div className="flex" style={{ gap: '0.8cqw' }}>
                 {[
-                  { Icon: LeetCodeIcon, link: "https://leetcode.com/u/akshath-31/", label: "LeetCode" },
-                  { Icon: FileText, link: "https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing", label: "Resume" }
+                  { Icon: LeetCodeIcon, link: "https://leetcode.com/u/akshath-31/",                                                          label: "LeetCode" },
+                  { Icon: FileText,     link: "https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing",         label: "Resume"   },
                 ].map(({ Icon, link, label }, i) => (
                   <motion.a
-                    key={i}
+                    key={label}
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    title={label}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.6 + i * 0.1 }}
-                    className="rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group relative"
-                    style={{ width: '2.2cqw', height: '2.2cqw' }}
+                    className="rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+                    style={{ width: '2.8cqw', height: '2.8cqw', flexShrink: 0 }}
                   >
-                    <Icon style={{ width: '50%', height: '50%' }} className="group-hover:scale-110 transition-transform" />
-                    <span className="absolute -bottom-4 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-mono text-zinc-400 whitespace-nowrap">{label}</span>
+                    <Icon size={20} />
                   </motion.a>
                 ))}
               </div>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
               className="bg-zinc-900/40 border border-zinc-800/50 flex flex-col"
-              style={{ marginTop: 'auto', width: 'calc((22 / 32) * 100%)', padding: '1.2cqw', borderRadius: '1.2cqw' }}
+              style={{ marginTop: 'auto', width: 'calc((27.5 / 32) * 100%)', padding: '1.5cqw', borderRadius: '1.2cqw' }}
             >
               <h3 className="font-mono text-zinc-300 uppercase font-semibold" style={{ fontSize: '0.85cqw', letterSpacing: '0.2em' }}>
                 CURRENT PROJECT
@@ -273,18 +283,16 @@ export default function App() {
           </div>
 
           {/* Top-right zone */}
-          <div style={{ position: 'absolute', top: '4%', right: '3%', textAlign: 'right', pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: '0.5cqw' }}>
-            <div className="relative flex flex-col items-end" style={{ width: 'max-content' }}>
-              <div className="bg-zinc-800 relative overflow-hidden" style={{ width: '8cqw', height: '0.25cqw' }}>
-                <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[35%]" />
-              </div>
-              <span className="text-zinc-200 absolute right-0" style={{ fontSize: '0.9cqw', top: '100%', marginTop: '0.5cqw' }}>35%</span>
-            </div>
+          <div style={{ position: 'absolute', top: '4%', right: '3%', pointerEvents: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.35cqw' }}>
             <span className="text-zinc-200 hover:text-white cursor-pointer font-mono tracking-[0.3em] uppercase transition-colors" style={{ fontSize: '0.85cqw' }}>NEXT PRODUCT → SKILL SWAP</span>
+            <div className="bg-zinc-800 relative overflow-hidden" style={{ width: '100%', height: '0.25cqw' }}>
+              <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[35%]" />
+            </div>
+            <span className="text-zinc-200 font-mono" style={{ fontSize: '0.8cqw' }}>35%</span>
           </div>
 
           {/* Right panel */}
-          <div style={{ position: 'absolute', top: '18%', right: '3%', width: '28%', pointerEvents: 'auto' }}>
+          <div style={{ position: 'absolute', top: '48%', right: '3%', width: '28%', pointerEvents: 'auto', transform: 'translateY(-50%)' }}>
             <h2 className="font-mono text-black uppercase font-bold" style={{ fontSize: '1cqw', letterSpacing: '0.3em', marginBottom: '1.2cqw' }}>
               CURRENT STATUS
             </h2>
