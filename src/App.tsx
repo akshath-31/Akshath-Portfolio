@@ -19,11 +19,11 @@ import LoadingScreen from "./components/LoadingScreen";
 export default function App() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [isVideoTransitioning, setIsVideoTransitioning] = useState(false);
-  const [shiftPortal, setShiftPortal] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
   const [siteLoaded, setSiteLoaded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+
+  // Track which video is active (intro vs loop) — purely visual, no layout effect
+  const [showLoopVideo, setShowLoopVideo] = useState(false);
 
   useEffect(() => {
     const handleLoad = () => setSiteLoaded(true);
@@ -46,35 +46,21 @@ export default function App() {
   }, []);
 
   const introVideoRefDesktop = useRef<HTMLVideoElement>(null);
-  const introVideoRefMobile = useRef<HTMLVideoElement>(null);
   const loopVideoRefDesktop = useRef<HTMLVideoElement>(null);
-  const loopVideoRefMobile = useRef<HTMLVideoElement>(null);
 
-  // Trigger video playback *only* when the loading screen fully completely disappears
+  // Trigger video playback when loading screen disappears
   useEffect(() => {
     if (!isLoading) {
       if (introVideoRefDesktop.current) introVideoRefDesktop.current.play();
-      if (introVideoRefMobile.current) introVideoRefMobile.current.play();
     }
   }, [isLoading]);
 
+  // When intro video ends, crossfade to loop — NO layout changes
   const handleVideoEnded = () => {
-    setIsVideoTransitioning(true);
-
+    setShowLoopVideo(true);
     if (loopVideoRefDesktop.current) {
       loopVideoRefDesktop.current.play();
     }
-    if (loopVideoRefMobile.current) {
-      loopVideoRefMobile.current.play();
-    }
-
-    window.setTimeout(() => {
-      setShiftPortal(true);
-    }, 180);
-
-    window.setTimeout(() => {
-      setShowMenu(true);
-    }, 520);
   };
 
   return (
@@ -98,48 +84,47 @@ export default function App() {
           <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ea580c 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
         </div>
 
-        {/* Left-Side Navigation Menu (Desktop Only) */}
-        <AnimatePresence>
-          {showMenu && (
-            <motion.nav
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:flex absolute left-12 top-0 bottom-0 flex-col justify-center gap-12 z-20"
+        {/* Left-Side Navigation Menu (Desktop Only) — Renders immediately, no gate */}
+        <nav
+          className="hidden lg:flex absolute top-0 bottom-0 flex-col justify-center z-20"
+          style={{
+            left: 'clamp(24px, 3vw, 48px)',
+            gap: 'clamp(12px, 2vw, 48px)',
+          }}
+        >
+          {["About", "Skills", "Projects", "Experience", "Contact"].map((item) => (
+            <div
+              key={item}
+              className="group relative cursor-pointer"
+              onClick={() => navigate(`/${item.toLowerCase()}`)}
             >
-              {["About", "Skills", "Projects", "Experience", "Contact"].map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 + i * 0.1, duration: 0.8 }}
-                  className="group relative cursor-pointer"
-                  onClick={() => navigate(`/${item.toLowerCase()}`)}
-                >
-                  <span className="text-4xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative">
-                    {item}
-                  </span>
-                  {/* Glowing Orange Line on Hover */}
-                  <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-orange-500 group-hover:w-4 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
-                  {/* Subtle Text Reflection Glow */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 blur-xl bg-orange-500/20 transition-opacity duration-700 pointer-events-none" />
-                </motion.div>
-              ))}
-            </motion.nav>
-          )}
-        </AnimatePresence>
+              <span
+                className="font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-zinc-500 to-zinc-700 group-hover:from-orange-500 group-hover:to-orange-400 transition-all duration-500 uppercase z-10 relative block"
+                style={{
+                  fontSize: 'clamp(14px, 2vw, 36px)',
+                }}
+              >
+                {item}
+              </span>
+              {/* Glowing Orange Line on Hover */}
+              <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-0 h-[2px] bg-orange-500 group-hover:w-4 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
+              {/* Subtle Text Reflection Glow */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 blur-xl bg-orange-500/20 transition-opacity duration-700 pointer-events-none" />
+            </div>
+          ))}
+        </nav>
 
-        {/* Portal Container (Glassy Box on Desktop) */}
+        {/* Portal Container (Glassy Box on Desktop) — fixed at final position */}
         <motion.div
-          animate={{ x: isDesktop && shiftPortal ? 170 : 0 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          style={{ willChange: "transform" }}
+          initial={false}
+          style={{
+            willChange: "transform",
+            transform: isDesktop ? 'translateX(170px)' : 'translateX(0px)',
+          }}
           className="relative w-full min-h-screen lg:absolute lg:inset-0 lg:m-auto lg:w-full lg:max-w-[min(calc(100vw-22rem),calc((100vh-30px)*16/9))] lg:aspect-video lg:h-auto lg:min-h-0 z-10 transform-gpu"
         >
         <div
-          className={`relative w-full min-h-screen lg:h-full lg:min-h-0 lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden flex flex-col ${
-            isDesktop && shiftPortal ? "lg:backdrop-blur-md" : "lg:backdrop-blur-xl"
-          }`}
+          className="relative w-full min-h-screen lg:h-full lg:min-h-0 lg:rounded-[2.5rem] lg:border lg:border-white/10 lg:bg-black/40 lg:shadow-[0_0_60px_-15px_rgba(234,88,12,0.3)] lg:overflow-hidden flex flex-col lg:backdrop-blur-md"
         >
           {/* Black Background Base */}
           <div className="absolute inset-0 bg-black z-[-20] lg:bg-transparent" />
@@ -152,8 +137,8 @@ export default function App() {
             muted
             playsInline
             onEnded={handleVideoEnded}
-            className={`absolute inset-0 w-full h-full object-cover opacity-80 transition-opacity duration-1000 ${
-              isVideoTransitioning ? "opacity-0" : "opacity-80"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+              showLoopVideo ? "opacity-0" : "opacity-80"
             }`}
           >
             <source src="/Aks_Tilt.webm" type="video/webm" />
@@ -165,7 +150,7 @@ export default function App() {
             muted
             playsInline
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-              isVideoTransitioning ? "opacity-80" : "opacity-0"
+              showLoopVideo ? "opacity-80" : "opacity-0"
             }`}
           >
             <source src="/Aks_Blink_Loop.webm" type="video/webm" />
