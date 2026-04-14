@@ -198,10 +198,10 @@ export default function App() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="text-zinc-400 font-light leading-relaxed"
-                    style={{ fontSize: "1.05cqw", maxWidth: "28cqw", marginBottom: "1.6cqw" }}
+                    className="text-zinc-400 font-light leading-relaxed text-justify"
+                    style={{ fontSize: "1.05cqw", maxWidth: "28cqw", marginBottom: "1.6cqw", hyphens: "auto" }}
                   >
-                    Turning raw data into decisions and ideas into deployed products. Full-stack by craft, data-driven by instinct.
+                    Full-stack engineer building data-driven products that turn complex insights into seamless user experiences.
                   </motion.p>
 
                   {/* Icons → 3-2 grid layout */}
