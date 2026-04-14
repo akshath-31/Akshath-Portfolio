@@ -1,33 +1,31 @@
 import { motion } from "motion/react";
 import TopNav from "../components/TopNav";
+import ContactForm from "../components/ContactForm";
 
 export default function Contact() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-white selection:text-black">
       <TopNav />
       
-      <main className="pt-32 pb-16 px-8 md:px-16 max-w-7xl mx-auto flex flex-col justify-center min-h-screen">
+      <main className="pt-32 pb-24 px-8 md:px-16 max-w-7xl mx-auto flex flex-col relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-8"
+          className="space-y-12"
         >
-          <div className="space-y-4">
-            <h2 className="text-[10px] tracking-[0.3em] font-mono text-orange-500 uppercase font-medium">
+          {/* HEADER */}
+          <div className="mb-16 flex flex-col gap-4 items-start">
+            <h2 className="text-orange-500 font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase font-medium">
               05 // Connect
             </h2>
-            <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight">
-              Get in Touch
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight text-orange-500">
+              Let's Connect
             </h1>
+            <div className="w-24 h-px bg-zinc-800 mt-2" />
           </div>
-          
-          <div className="w-24 h-px bg-zinc-800" />
-          
-          <p className="max-w-2xl text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-            Ready to build something extraordinary? Let's talk architecture, systems, and design.
-            (Content placeholder)
-          </p>
+
+          <ContactForm />
         </motion.div>
       </main>
 

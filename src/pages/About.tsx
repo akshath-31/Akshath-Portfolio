@@ -6,29 +6,129 @@ export default function About() {
     <div className="min-h-screen bg-zinc-950 text-white font-sans selection:bg-white selection:text-black">
       <TopNav />
       
-      <main className="pt-32 pb-16 px-8 md:px-16 max-w-7xl mx-auto flex flex-col justify-center min-h-screen">
+      <main className="pt-32 pb-24 px-8 md:px-16 max-w-5xl mx-auto flex flex-col relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-8"
+          className="space-y-16"
         >
-          <div className="space-y-4">
-            <h2 className="text-[10px] tracking-[0.3em] font-mono text-orange-500 uppercase font-medium">
+          {/* HEADER */}
+          <div className="mb-16 flex flex-col gap-4 items-start">
+            <h2 className="text-orange-500 font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase font-medium">
               01 // Profile
             </h2>
-            <h1 className="text-4xl md:text-6xl font-display font-medium leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium leading-tight text-orange-500">
               About Me
             </h1>
+            <div className="w-24 h-px bg-zinc-800 mt-2" />
           </div>
           
-          <div className="w-24 h-px bg-zinc-800" />
-          
-          <p className="max-w-2xl text-zinc-400 text-sm md:text-base leading-relaxed font-light">
-            I craft bespoke web experiences with a focus on high-performance code, 
-            blending robust technical architecture with premium aesthetic design.
-            (Content placeholder)
-          </p>
+          {/* SECTION 01 — BIO + PHOTO */}
+          <section className="grid grid-cols-1 md:grid-cols-[11fr_9fr] gap-12 items-center">
+            <div className="order-2 md:order-1 text-zinc-400 text-sm md:text-base leading-relaxed font-light text-justify [text-align-last:center] md:[text-align-last:left]">
+              <p>
+                I’m Akshath, a pre-final year Computer Science student at SRM Chennai with a strong interest in building impactful technology solutions. I focus on full-stack development and AI-driven applications, creating practical solutions to real-world problems. I enjoy solving complex challenges and turning them into clean, efficient systems with a focus on performance and usability. Hackathons have shaped my ability to think quickly, adapt, and build under pressure. Beyond tech, I’m a sports enthusiast with a strong passion for cricket and football, and I’ve competed in cricket at a professional level representing TNCA 3rd Division, which has built my discipline and resilience. I’m also developing an interest in finance, exploring market trends and long-term value creation.
+              </p>
+            </div>
+            <div className="order-1 md:order-2 flex justify-center md:justify-end">
+              <div 
+                id="profile-photo"
+                className="w-full max-w-[420px] aspect-square rounded-[24px] overflow-hidden border border-orange-500/20 shadow-lg shadow-orange-500/10 flex items-center justify-center bg-orange-500/5"
+              >
+                <img 
+                  src="/Aks_pic_1.JPG" 
+                  alt="Akshath Senthilkumar" 
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 02 — QUICK STATS */}
+          <section className="border-b border-orange-500/20 pb-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              {[
+                { value: "3", label: "Years Coding" },
+                { value: "5+", label: "Products Shipped" },
+                { value: "5+", label: "Hackathons Built" },
+                { value: "2", label: "Research Papers" }
+              ].map((stat, i) => (
+                <div 
+                  key={i}
+                  className="flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 hover:bg-orange-500/5 hover:shadow-[0_0_15px_rgba(249,115,22,0.15)] group"
+                >
+                  <span className="text-4xl md:text-5xl font-bold text-orange-500 mb-2 font-display">{stat.value}</span>
+                  <span className="text-zinc-500 text-[10px] md:text-xs tracking-widest uppercase font-mono">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SECTION 03 — WHAT I DO */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 md:divide-x divide-zinc-800/50">
+            {/* Left Column */}
+            <div className="md:pr-8">
+              <div className="pl-6 border-l-[3px] border-orange-500/30 hover:border-orange-500 transition-all duration-200 ease-in-out h-full">
+                <h3 className="text-xs md:text-sm font-mono text-orange-500 uppercase tracking-widest mb-3">
+                  FULL STACK DEV
+                </h3>
+                <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
+                  I build end-to-end products from idea to deployment with clean architecture, fast interfaces, and reliable performance.
+                </p>
+              </div>
+            </div>
+            
+            {/* Right Column */}
+            <div className="md:pl-8">
+              <div className="pl-6 border-l-[3px] border-orange-500/30 hover:border-orange-500 transition-all duration-200 ease-in-out h-full">
+                <h3 className="text-xs md:text-sm font-mono text-orange-500 uppercase tracking-widest mb-3">
+                  DATA SCIENCE & ML
+                </h3>
+                <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
+                  I turn raw data into intelligent systems, building models and integrating them into real-world applications that actually work.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 04 — BEYOND THE CODE */}
+          <section className="space-y-6">
+            <h3 className="text-xs md:text-sm font-mono text-orange-500 uppercase tracking-widest">
+              BEYOND THE CODE
+            </h3>
+            <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-light">
+              Beyond the screen, I’m a sports enthusiast who has competed in cricket at the TNCA 3rd Division level, where I learned to perform under pressure, stay consistent, and contribute effectively within a team. Football runs equally deep in my interests, and I closely follow clubs like Real Madrid, while in cricket I’m a strong supporter of RCB. That same competitive discipline shapes how I approach every build, deadline, and challenge. I also have a growing curiosity in finance, exploring market dynamics and how strategic decisions compound into long term value.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              {[
+                "🏏 TNCA Cricket — 3rd Division"
+              ].map((tag) => (
+                <span 
+                  key={tag}
+                  className="px-4 py-2 border border-orange-500 text-orange-500 rounded-full text-[10px] md:text-xs font-mono transition-all duration-200 ease-in-out hover:bg-orange-500 hover:text-zinc-950 cursor-default"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          {/* SECTION 05 — RESUME CTA */}
+          <section className="text-center pt-8 pb-4">
+            <a 
+              href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-orange-500 text-zinc-950 font-bold font-mono uppercase tracking-widest px-8 md:px-10 py-4 md:py-5 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.03] hover:brightness-110 mb-4"
+            >
+              View Resume
+            </a>
+            <div className="text-zinc-600 text-[10px] md:text-xs font-mono tracking-widest">
+              Last updated · 2026
+            </div>
+          </section>
+
         </motion.div>
       </main>
 
