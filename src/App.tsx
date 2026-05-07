@@ -12,7 +12,7 @@ import { useNavigate, Link } from "react-router-dom";
 // FIX: Removed hardcoded width/height attributes from <svg> so the style prop controls sizing,
 // matching how Lucide icons scale with the cqw-based style passed from the parent.
 const LeetCodeIcon = ({ size = 18, className = "", style = {} }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className} style={style} xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 24 24" fill="currentColor" width={size} height={size} className={className} style={style} xmlns="http://www.w3.org/2000/svg">
     <path d="M13.483 0a1.374 1.374 0 0 0 -0.961 0.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0 -1.209 2.104 5.35 5.35 0 0 0 -0.125 0.513 5.527 5.527 0 0 0 0.062 2.362 5.83 5.83 0 0 0 0.349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193 0.039 0.038c2.248 2.165 5.852 2.133 8.063 -0.074l2.396 -2.392c0.54 -0.54 0.54 -1.414 0.003 -1.955a1.378 1.378 0 0 0 -1.951 -0.003l-2.396 2.392a3.021 3.021 0 0 1 -4.205 0.038l-0.02 -0.019 -4.276 -4.193c-0.652 -0.64 -0.972 -1.469 -0.948 -2.263a2.68 2.68 0 0 1 0.066 -0.523 2.545 2.545 0 0 1 0.619 -1.164L9.13 8.114c1.058 -1.134 3.204 -1.27 4.43 -0.278l3.501 2.831c0.593 0.48 1.461 0.387 1.94 -0.207a1.384 1.384 0 0 0 -0.207 -1.943l-3.5 -2.831c-0.8 -0.647 -1.766 -1.045 -2.774 -1.202l2.015 -2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0 -1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38 -1.382 1.38 1.38 0 0 0 -1.38 -1.382z" />
   </svg>
 );
@@ -470,40 +470,39 @@ export default function App() {
               
               {/* Mobile Header */}
               <div className="w-full flex items-center justify-between p-6 bg-black z-[55] sticky top-0 border-b border-white/5">
-                <div className="font-bold text-white text-[17px] leading-tight tracking-tight uppercase">
+                <div className="font-bold text-orange-500 text-[17px] leading-tight tracking-tight uppercase">
                   AKSHATH SENTHILKUMAR
                 </div>
-                <button onClick={() => setIsMobileMenuOpen(true)} className="text-white hover:text-orange-500 transition-colors">
-                  <Menu size={24} />
-                </button>
-              </div>
-
-              {/* Mobile Full Screen Menu */}
-              <AnimatePresence>
-                {isMobileMenuOpen && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: "-100%" }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: "-100%" }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8"
-                  >
-                    <button onClick={() => setIsMobileMenuOpen(false)} className="absolute top-6 right-6 text-white hover:text-orange-500 transition-colors">
-                      <X size={32} />
-                    </button>
-                    {["About", "Skills", "Projects", "Experience", "Contact"].map((item) => (
-                      <Link 
-                        key={item} 
-                        to={`/${item.toLowerCase()}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-3xl font-mono text-white tracking-widest uppercase hover:text-orange-500 transition-colors"
+                <div className="relative flex items-center justify-center">
+                  <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-orange-500 hover:text-orange-400 transition-colors flex items-center justify-center">
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                  </button>
+                  
+                  {/* Mobile Dropdown Menu */}
+                  <AnimatePresence>
+                    {isMobileMenuOpen && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 top-full mt-6 w-52 bg-zinc-950/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col py-3 z-[60] overflow-hidden"
                       >
-                        {item}
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                        {["About", "Skills", "Projects", "Experience", "Contact"].map((item) => (
+                          <Link 
+                            key={item} 
+                            to={`/${item.toLowerCase()}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="px-6 py-2.5 text-[15px] font-mono font-bold text-zinc-400 tracking-widest uppercase hover:text-orange-500 hover:bg-zinc-900 transition-colors text-left"
+                          >
+                            {item}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
 
               {/* Mobile Video Header (Full width, top part) */}
               <div className="w-full h-[40vh] relative overflow-hidden bg-black shrink-0 shadow-[0_10px_40px_rgba(234,88,12,0.15)] rounded-b-[2.5rem]">
@@ -540,7 +539,7 @@ export default function App() {
                   transition={{ delay: 0.2 }}
                   className="flex flex-col p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-xl border border-white/5 shadow-xl mt-8"
                 >
-                  <div className="font-mono text-orange-500 font-bold leading-snug uppercase text-xs mb-4 mt-2">
+                  <div className="font-mono text-orange-500 font-bold leading-snug uppercase text-xs mb-4 mt-6">
                     <div>&lt;FULL STACK DEV/&gt;</div>
                     <div>&lt;DS &amp; ML ENGINEER/&gt;</div>
                   </div>
