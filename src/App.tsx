@@ -464,16 +464,17 @@ export default function App() {
             {/* ══ END UNIFIED DESKTOP OVERLAY ══ */}
 
 
-            {/* ── MOBILE LAYOUT (unchanged) ── */}
-            <main className="relative flex-grow flex flex-col lg:flex-row items-center justify-center z-10 lg:p-0 min-h-screen lg:min-h-0">
-              {/* Mobile Video Header */}
-              <div className="lg:hidden w-full h-[50vh] relative overflow-hidden mb-12 bg-black">
+            {/* ── NEW MOBILE LAYOUT ── */}
+            <main className="relative lg:hidden flex flex-col w-full min-h-screen z-10 pb-24 overflow-x-hidden">
+              
+              {/* Mobile Video Header (Full width, top part) */}
+              <div className="w-full h-[40vh] relative overflow-hidden bg-black shrink-0 shadow-[0_10px_40px_rgba(234,88,12,0.15)] rounded-b-[2.5rem]">
                 <video
                   ref={introVideoRefMobile}
                   muted
                   playsInline
                   onEnded={handleVideoEnded}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoTransitioning ? "opacity-0" : "opacity-80"}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoTransitioning ? "opacity-0" : "opacity-90"}`}
                 >
                   <source src="/Aks_Tilt.webm" type="video/webm" />
                 </video>
@@ -482,96 +483,154 @@ export default function App() {
                   loop
                   muted
                   playsInline
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoTransitioning ? "opacity-80" : "opacity-0"}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isVideoTransitioning ? "opacity-90" : "opacity-0"}`}
                 >
                   <source src="/Aks_Blink_Loop.webm" type="video/webm" />
                 </video>
-                <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black to-transparent opacity-80" />
-                <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black via-black/80 to-transparent" />
+                {/* Gradient overlays to blend into the dark background below */}
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent mix-blend-overlay" />
               </div>
 
-              <div className="w-full max-w-md px-6 lg:px-0 flex flex-col items-center">
-                {/* Mobile Technical Specs */}
-                <div className="lg:hidden w-full mb-12 scale-110">
-                  <h2 className="text-[11px] tracking-[0.3em] font-mono text-black mb-6 uppercase font-bold">
+              {/* Mobile Content Section */}
+              <div className="flex flex-col px-6 -mt-16 relative z-20 space-y-10">
+                
+                {/* Title & Tagline */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex flex-col p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-xl border border-white/5 shadow-xl"
+                >
+                  <div className="font-bold text-white text-3xl leading-tight tracking-tight uppercase mb-2">
+                    AKSHATH <br/> SENTHILKUMAR
+                  </div>
+                  <div className="font-mono text-orange-500 font-bold leading-snug uppercase text-xs mb-4">
+                    <div>&lt;FULL STACK DEV/&gt;</div>
+                    <div>&lt;DS &amp; ML ENGINEER/&gt;</div>
+                  </div>
+                  <p className="text-zinc-400 font-light text-sm leading-relaxed text-justify mb-6">
+                    Full-stack engineer building data-driven products that turn complex insights into seamless user experiences.
+                  </p>
+                  
+                  {/* Social Icons */}
+                  <div className="flex flex-wrap gap-3">
+                    {socialIcons.map(({ Icon, link, label }, i) => (
+                      <motion.a
+                        key={i}
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4 + i * 0.08 }}
+                        className="rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all duration-300 w-11 h-11 text-zinc-400 shadow-md"
+                      >
+                        <Icon size={18} />
+                      </motion.a>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Current Status */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="w-full p-6 rounded-3xl bg-zinc-900/40 backdrop-blur-md border border-white/5"
+                >
+                  <h2 className="text-[10px] tracking-[0.3em] font-mono text-orange-500/80 mb-6 uppercase font-bold flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
                     CURRENT STATUS
                   </h2>
-                  <div className="space-y-4 font-mono text-[12px]">
+                  <div className="space-y-4 font-mono text-xs">
                     {[
                       { label: "STATUS", value: "Available for Internships" },
                       { label: "FOCUS", value: "Data Analysis & AI Products" },
                       { label: "LOCATION", value: "Chennai, India" },
                       { label: "SPECIALTY", value: "Full-Stack + ML Systems" },
                     ].map((spec, i) => (
-                      <div key={i} className="flex justify-between border-b border-zinc-900 pb-2">
-                        <span className="text-black">{spec.label}</span>
-                        <span className="text-white">{spec.value}</span>
+                      <div key={i} className="flex justify-between items-end border-b border-zinc-800/50 pb-3">
+                        <span className="text-zinc-500 tracking-wider">{spec.label}</span>
+                        <span className="text-white font-medium text-right max-w-[60%]">{spec.value}</span>
                       </div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex-grow" />
-
-                {/* Mobile Card & Tags */}
-                <div className="lg:hidden w-full space-y-8 mt-12 pb-12">
-                  <div className="p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800/50">
-                    <div className="flex flex-col gap-3">
-                      <h3 className="font-mono tracking-[0.2em] text-zinc-300 uppercase font-semibold" style={{ fontSize: "13px" }}>
-                        CURRENT PROJECT
-                      </h3>
-                      <div className="text-white font-medium" style={{ fontSize: "21px" }}>J.A.R.V.I.S</div>
-                      <p className="text-zinc-400 leading-relaxed mb-[7px] font-light" style={{ fontSize: "18.5px" }}>
+                {/* Current Project Card */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="w-full"
+                >
+                  <div className="p-6 rounded-3xl bg-gradient-to-br from-zinc-900/80 to-black border border-zinc-800/80 backdrop-blur-lg relative overflow-hidden shadow-2xl group">
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/10 blur-3xl rounded-full group-hover:bg-orange-500/20 transition-all duration-700" />
+                    <div className="flex flex-col gap-4 relative z-10">
+                      <div className="flex justify-between items-start">
+                        <h3 className="font-mono tracking-[0.2em] text-orange-500 uppercase font-semibold text-[10px]">
+                          CURRENT PROJECT
+                        </h3>
+                        <span className="text-zinc-300 font-mono tracking-widest text-[10px] bg-zinc-800/80 backdrop-blur-sm border border-white/5 px-2 py-1 rounded">60%</span>
+                      </div>
+                      <div className="text-white font-semibold text-2xl tracking-tight">J.A.R.V.I.S</div>
+                      <p className="text-zinc-400 leading-relaxed text-sm font-light">
                         "Just a rather very intelligent system. You know right 😉"
                       </p>
-                      <div className="flex flex-col gap-1 mb-[7px]">
-                        <div className="w-full h-[2px] bg-zinc-800 relative overflow-hidden">
-                          <div className="absolute top-0 left-0 h-full bg-zinc-200 w-[60%]" />
-                        </div>
-                        <span className="text-zinc-200 font-mono tracking-widest" style={{ fontSize: "11.5px" }}>60%</span>
+                      <div className="w-full h-1 bg-zinc-800/50 rounded-full overflow-hidden my-2 relative">
+                        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-orange-600 to-orange-400 w-[60%] rounded-full shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
                       </div>
                       <a
                         href="https://github.com/akshath-31/jarvis"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full py-4 rounded-full border border-zinc-700 font-mono uppercase tracking-[0.2em] hover:bg-white hover:text-black active:bg-white active:text-black transition-all flex items-center justify-center"
-                        style={{ fontSize: "11.5px" }}
+                        className="w-full mt-2 py-4 rounded-full border border-orange-500/30 font-mono uppercase tracking-[0.2em] text-[10px] hover:bg-orange-500 hover:text-white active:scale-95 transition-all flex items-center justify-center text-orange-500 bg-orange-500/5 shadow-[0_0_15px_rgba(234,88,12,0.1)] hover:shadow-[0_0_20px_rgba(234,88,12,0.4)]"
                       >
                         COLLABORATE
                       </a>
                     </div>
                   </div>
+                </motion.div>
 
-                  <div className="flex flex-wrap gap-2 justify-center">
+                {/* Nav Pills */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="flex flex-col gap-3 justify-center pt-2"
+                >
+                  <div className="flex gap-3">
                     <a
                       href="https://drive.google.com/file/d/108GOPEmdkp4mM0fX3jYRww7hG3pOISSa/view?usp=sharing"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800"
+                      className="py-4 rounded-full text-[10px] font-mono tracking-[0.2em] border flex items-center justify-center bg-zinc-900/50 text-zinc-300 border-zinc-800 hover:bg-zinc-800 hover:text-white transition-colors flex-1 backdrop-blur-sm"
                     >
                       MY STACK
                     </a>
                     <Link
                       to="/projects"
-                      className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-zinc-900/40 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800"
+                      className="py-4 rounded-full text-[10px] font-mono tracking-[0.2em] border flex items-center justify-center bg-zinc-900/50 text-zinc-300 border-zinc-800 hover:bg-zinc-800 hover:text-white transition-colors flex-1 backdrop-blur-sm"
                     >
                       PORTFOLIO
                     </Link>
-                    <Link
-                      to="/contact"
-                      className="px-4 py-2 rounded-full text-[9px] font-mono tracking-[0.2em] border flex items-center gap-2 bg-white text-black border-white"
-                    >
-                      GET IN TOUCH
-                    </Link>
                   </div>
-                </div>
+                  <Link
+                    to="/contact"
+                    className="w-full py-4 rounded-full text-[10px] font-mono tracking-[0.2em] border flex items-center justify-center bg-white text-black border-white hover:bg-orange-500 hover:border-orange-500 hover:text-white shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all"
+                  >
+                    GET IN TOUCH
+                  </Link>
+                </motion.div>
+                
               </div>
             </main>
 
             {/* Decorative Background Elements (Mobile Only) */}
             <div className="absolute inset-0 pointer-events-none z-0 lg:hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.02),transparent_70%)]" />
-              <div className="absolute top-0 left-0 w-full h-full opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(234,88,12,0.05),transparent_70%)]" />
+              <div className="absolute top-0 left-0 w-full h-full opacity-10" style={{ backgroundImage: 'radial-gradient(#ea580c 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
             </div>
 
           </div>
