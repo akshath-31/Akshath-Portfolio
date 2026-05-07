@@ -5,7 +5,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Linkedin, Github, Instagram, FileText } from "lucide-react";
+import { Linkedin, Github, Instagram, FileText, Menu, X } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 
 // LeetCode Icon component
@@ -27,6 +27,7 @@ export default function App() {
   const [showMenu, setShowMenu] = useState(false);
   const [siteLoaded, setSiteLoaded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleLoad = () => setSiteLoaded(true);
@@ -467,6 +468,43 @@ export default function App() {
             {/* ── NEW MOBILE LAYOUT ── */}
             <main className="relative lg:hidden flex flex-col w-full min-h-screen z-10 pb-24 overflow-x-hidden">
               
+              {/* Mobile Header */}
+              <div className="w-full flex items-center justify-between p-6 bg-black z-[55] sticky top-0 border-b border-white/5">
+                <div className="font-bold text-white text-[17px] leading-tight tracking-tight uppercase">
+                  AKSHATH SENTHILKUMAR
+                </div>
+                <button onClick={() => setIsMobileMenuOpen(true)} className="text-white hover:text-orange-500 transition-colors">
+                  <Menu size={24} />
+                </button>
+              </div>
+
+              {/* Mobile Full Screen Menu */}
+              <AnimatePresence>
+                {isMobileMenuOpen && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: "-100%" }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: "-100%" }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8"
+                  >
+                    <button onClick={() => setIsMobileMenuOpen(false)} className="absolute top-6 right-6 text-white hover:text-orange-500 transition-colors">
+                      <X size={32} />
+                    </button>
+                    {["About", "Skills", "Projects", "Experience", "Contact"].map((item) => (
+                      <Link 
+                        key={item} 
+                        to={`/${item.toLowerCase()}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-3xl font-mono text-white tracking-widest uppercase hover:text-orange-500 transition-colors"
+                      >
+                        {item}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Mobile Video Header (Full width, top part) */}
               <div className="w-full h-[40vh] relative overflow-hidden bg-black shrink-0 shadow-[0_10px_40px_rgba(234,88,12,0.15)] rounded-b-[2.5rem]">
                 <video
@@ -500,12 +538,9 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="flex flex-col p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-xl border border-white/5 shadow-xl"
+                  className="flex flex-col p-6 rounded-3xl bg-zinc-900/60 backdrop-blur-xl border border-white/5 shadow-xl mt-8"
                 >
-                  <div className="font-bold text-white text-3xl leading-tight tracking-tight uppercase mb-2">
-                    AKSHATH <br/> SENTHILKUMAR
-                  </div>
-                  <div className="font-mono text-orange-500 font-bold leading-snug uppercase text-xs mb-4">
+                  <div className="font-mono text-orange-500 font-bold leading-snug uppercase text-xs mb-4 mt-2">
                     <div>&lt;FULL STACK DEV/&gt;</div>
                     <div>&lt;DS &amp; ML ENGINEER/&gt;</div>
                   </div>
@@ -558,40 +593,7 @@ export default function App() {
                   </div>
                 </motion.div>
 
-                {/* Current Project Card */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="w-full"
-                >
-                  <div className="p-6 rounded-3xl bg-gradient-to-br from-zinc-900/80 to-black border border-zinc-800/80 backdrop-blur-lg relative overflow-hidden shadow-2xl group">
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/10 blur-3xl rounded-full group-hover:bg-orange-500/20 transition-all duration-700" />
-                    <div className="flex flex-col gap-4 relative z-10">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-mono tracking-[0.2em] text-orange-500 uppercase font-semibold text-[10px]">
-                          CURRENT PROJECT
-                        </h3>
-                        <span className="text-zinc-300 font-mono tracking-widest text-[10px] bg-zinc-800/80 backdrop-blur-sm border border-white/5 px-2 py-1 rounded">60%</span>
-                      </div>
-                      <div className="text-white font-semibold text-2xl tracking-tight">J.A.R.V.I.S</div>
-                      <p className="text-zinc-400 leading-relaxed text-sm font-light">
-                        "Just a rather very intelligent system. You know right 😉"
-                      </p>
-                      <div className="w-full h-1 bg-zinc-800/50 rounded-full overflow-hidden my-2 relative">
-                        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-orange-600 to-orange-400 w-[60%] rounded-full shadow-[0_0_10px_rgba(234,88,12,0.8)]" />
-                      </div>
-                      <a
-                        href="https://github.com/akshath-31/jarvis"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full mt-2 py-4 rounded-full border border-orange-500/30 font-mono uppercase tracking-[0.2em] text-[10px] hover:bg-orange-500 hover:text-white active:scale-95 transition-all flex items-center justify-center text-orange-500 bg-orange-500/5 shadow-[0_0_15px_rgba(234,88,12,0.1)] hover:shadow-[0_0_20px_rgba(234,88,12,0.4)]"
-                      >
-                        COLLABORATE
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
+                {/* Current Project Card Removed from Mobile */}
 
                 {/* Nav Pills */}
                 <motion.div 
